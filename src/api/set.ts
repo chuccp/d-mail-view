@@ -1,0 +1,17 @@
+import request from "@/util/request";
+import type {SetInfo, System} from "@/interface/System";
+
+export async function getSet() {
+    const vv = await request({url: "/set"})
+    return vv.data as System
+}
+
+export async function putSet(setInfo: SetInfo) {
+    const vv = await request({url: "/set", method: 'put', data: setInfo})
+    return vv.data as System
+}
+
+export async function getDefaultSet() {
+    const vv = await request({url: "/defaultSet"})
+    return vv.data as SetInfo
+}
