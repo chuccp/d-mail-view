@@ -60,11 +60,11 @@ export interface PageState {
 
 export interface Token {
     id?: Number | string | string[] | Number[]
-    subject?:string
+    subject?: string
     token?: string
     receiveEmailIds?: any
     receiveEmails?: Array<Select>
-    STMP?:Select
+    STMP?: Select
     STMPSelectedTags?: Array<Select>
     mailSelectedTags?: Array<Select>
     STMPId?: any
@@ -90,4 +90,15 @@ export interface Sqlite {
 export interface Admin {
     username?: string
     password?: string
+}
+
+export interface Log {
+    id?: Number | string | string[] | Number[]
+    name: string
+    mail: string
+    stmp: string
+    createTime?: Date
+    updateTime?: Date
+    status: number |Number
+    result: string
 }

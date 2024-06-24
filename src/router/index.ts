@@ -10,7 +10,12 @@ const router = createRouter({
             path: '/',
             name: 'admin',
             component: AdminView,
+            redirect: "",
             children: [
+                {
+                    path: '',
+                    component: () => import('../views/log/IndexView.vue'),
+                },
                 {
                     path: '/smtp',
                     redirect: "",
