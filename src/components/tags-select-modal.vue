@@ -33,7 +33,7 @@ const props = defineProps({
 })
 
 const selectedTags =defineModel<Array<Select>>('selectedTags')
-console.log(selectedTags.value)
+
 
 const emits = defineEmits([ "showSelect", "handleTableChange"])
 const open = ref<boolean>(false)

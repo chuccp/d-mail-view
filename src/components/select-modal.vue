@@ -65,8 +65,8 @@ const onSelectChange = (vs: Array<number>) => {
   if(props.selectionType=="radio"){
     selectedTags.value = addRow!
   }else{
-    selectedTags.value = selectedTags.value!.filter((v:any)=>(!ids!.includes(v.id)))
-    selectedTags.value = selectedTags.value.concat(addRow!)
+    const selectedTags_value = selectedTags.value!.filter((v:any)=>(!ids!.includes(v.id)))
+    selectedTags.value = selectedTags_value.concat(addRow!)
   }
 }
 

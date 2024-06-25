@@ -13,9 +13,9 @@
 
       <div class="table-operations">
         <a-space>
-          <a-button @click="clickAdd">添加</a-button>
-          <a-button @click="clickEdit">修改</a-button>
-          <a-button @click="clickDelete">删除</a-button>
+          <a-button @click="clickAdd">add</a-button>
+          <a-button @click="clickEdit">edit</a-button>
+          <a-button @click="clickDelete">delete</a-button>
         </a-space>
       </div>
 
@@ -43,11 +43,11 @@ const clickEdit = () => {
     router.push("/smtp/edit/" + id)
   } else {
     Modal.confirm({
-      title: '提示',
+      title: 'select',
       icon: createVNode(ExclamationCircleOutlined),
-      content: '请选择一个',
-      okText: '确认',
-      cancelText: '取消',
+      content: 'please select one',
+      okText: 'ok',
+      cancelText: 'cancel',
     });
   }
 }
@@ -55,13 +55,15 @@ const clickEdit = () => {
 const clickDelete = () => {
   if (pageState.selectedRowKeys!.length > 0) {
     const id = pageState.selectedRowKeys![0]
+    const data = pageState.list?.filter(v=>v.id==id);
+
 
     Modal.confirm({
-      title: '提示',
+      title: 'delete',
       icon: createVNode(ExclamationCircleOutlined),
-      content: '确定删除吗',
-      okText: '确认',
-      cancelText: '取消',
+      content: 'delete mail:'+data![0].mail +"?",
+      okText: 'ok',
+      cancelText: 'cancel',
       onOk: () => {
         deleteSTMP(Number(id)).then(() => {
           queryPage()
@@ -72,11 +74,11 @@ const clickDelete = () => {
 
   } else {
     Modal.confirm({
-      title: '提示',
+      title: 'select',
       icon: createVNode(ExclamationCircleOutlined),
-      content: '请选择一个',
-      okText: '确认',
-      cancelText: '取消',
+      content: 'Please select one',
+      okText: 'ok',
+      cancelText: 'cancel',
     });
   }
 }

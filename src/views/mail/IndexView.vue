@@ -13,9 +13,9 @@
 
       <div class="table-operations">
         <a-space>
-          <a-button @click="clickAdd">添加</a-button>
-          <a-button @click="clickEdit">修改</a-button>
-          <a-button @click="clickDelete">删除</a-button>
+          <a-button @click="clickAdd">add</a-button>
+          <a-button @click="clickEdit">edit</a-button>
+          <a-button @click="clickDelete">delete</a-button>
         </a-space>
       </div>
 
@@ -43,11 +43,11 @@ const clickEdit = () => {
     router.push("/mail/edit/" + id)
   } else {
     Modal.confirm({
-      title: '提示',
+      title: 'select',
       icon: createVNode(ExclamationCircleOutlined),
-      content: '请选择一个',
-      okText: '确认',
-      cancelText: '取消',
+      content: 'please select one',
+      okText: 'ok',
+      cancelText: 'cancel',
     });
   }
 }
@@ -57,11 +57,11 @@ const clickDelete = () => {
     const id = pageState.selectedRowKeys![0]
 
     Modal.confirm({
-      title: '提示',
+      title: 'delete',
       icon: createVNode(ExclamationCircleOutlined),
-      content: '确定删除吗',
-      okText: '确认',
-      cancelText: '取消',
+      content: 'delete?',
+      okText: 'ok',
+      cancelText: 'cancel',
       onOk: () => {
         deleteMail(Number(id)).then(() => {
           queryPage()
@@ -72,11 +72,11 @@ const clickDelete = () => {
 
   } else {
     Modal.confirm({
-      title: '提示',
+      title: 'select',
       icon: createVNode(ExclamationCircleOutlined),
-      content: '请选择一个',
-      okText: '确认',
-      cancelText: '取消',
+      content: 'please',
+      okText: 'ok',
+      cancelText: 'cancel',
     });
   }
 }

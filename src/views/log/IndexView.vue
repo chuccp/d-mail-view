@@ -16,7 +16,7 @@
 
       <div class="table-operations">
         <a-space>
-          <a-button >查看</a-button>
+          <a-button >view</a-button>
         </a-space>
       </div>
 
