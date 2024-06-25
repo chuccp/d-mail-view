@@ -11,6 +11,17 @@
         <a>{{ text }}</a>
       </template>
     </template>
+
+    <template #title>
+
+      <div class="table-operations">
+        <a-space>
+          <a-button >查看</a-button>
+        </a-space>
+      </div>
+
+    </template>
+
     <template #footer></template>
   </a-table>
 </template>
@@ -18,8 +29,9 @@
 
 import type {Log, Page,Pagination} from "@/interface/System";
 import moment from "moment/moment";
-import {reactive} from "vue";
+import {reactive,onMounted} from "vue";
 import {fetchList} from "@/api/log";
+
 
 
 
@@ -31,6 +43,11 @@ const pageState = reactive<Page<Log>>({
   pageSize: 5,
   list: new Array<Log>()
 })
+
+onMounted(() => {
+  queryPage()
+})
+
 const queryPage = () => {
   pageState.loading = true
   fetchList(pageState.current!, pageState.pageSize!).then((page: Page<Log>) => {
@@ -55,13 +72,20 @@ const onSelectChange=(v: any)=>{
 
 const columns = [
   {
-    title: 'mail',
-    className: 'mail',
-    dataIndex: 'mail',
+    title: 'token',
+    className: 'token',
+    dataIndex: 'token',
   },
   {
-    title: 'name',
-    dataIndex: 'name',
+    title: 'subject',
+    dataIndex: 'subject',
+  },  {
+    title: 'status',
+    className: 'statusStr',
+    dataIndex: 'statusStr',
+  },{
+    title: 'result',
+    dataIndex: 'result',
   }, {
     title: 'createTime',
     dataIndex: 'createTime',
