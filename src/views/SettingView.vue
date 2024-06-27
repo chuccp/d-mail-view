@@ -7,7 +7,7 @@
 
           <a-card title="select db">
 
-            <a-form :label-col="labelCol" >
+            <a-form :label-col="labelCol" :model="formState">
               <a-form-item label="select db">
                 <a-select v-model:value="formState.dbType" placeholder="please select your db">
                   <a-select-option value="mysql">mysql</a-select-option>
@@ -15,29 +15,32 @@
                 </a-select>
               </a-form-item>
 
-              <a-form-item label="filename">
-                <a-input v-model:value="formState.sqlite!.filename" placeholder="filename"/>
-              </a-form-item>
+              <template v-if="formState.dbType=='sqlite'">
+                <a-form-item label="filename">
+                  <a-input v-model:value="formState.sqlite!.filename" placeholder="filename"/>
+                </a-form-item>
+              </template>
+              <template v-if="formState.dbType=='mysql'">
+                <a-form-item label="host">
+                  <a-input v-model:value="formState.mysql!.host" placeholder="host"/>
+                </a-form-item>
+                <a-form-item label="port">
+                  <a-input v-model:value="formState.mysql!.port" placeholder="port"/>
+                </a-form-item>
+                <a-form-item label="dbname">
+                  <a-input v-model:value="formState.mysql!.dbname" placeholder="dbname"/>
+                </a-form-item>
+                <a-form-item label="username">
+                  <a-input v-model:value="formState.mysql!.username" placeholder="username"/>
+                </a-form-item>
+                <a-form-item label="password">
+                  <a-input-password v-model:value="formState.mysql!.password" placeholder="password"/>
+                </a-form-item>
+                <a-form-item label="charset">
+                  <a-input v-model:value="formState.mysql!.charset" placeholder="charset"/>
+                </a-form-item>
+              </template>
 
-              <a-form-item label="host">
-                <a-input v-model:value="formState.mysql!.host" placeholder="host"/>
-              </a-form-item>
-              <a-form-item label="port">
-                <a-input v-model:value="formState.mysql!.port" placeholder="port"/>
-              </a-form-item>
-              <a-form-item label="dbname">
-                <a-input v-model:value="formState.mysql!.dbname" placeholder="dbname"/>
-              </a-form-item>
-              <a-form-item label="username">
-                <a-input v-model:value="formState.mysql!.username" placeholder="username"/>
-              </a-form-item>
-              <a-form-item label="password">
-                <a-input-password v-model:value="formState.mysql!.password" placeholder="password"/>
-              </a-form-item>
-
-              <a-form-item label="charset">
-                <a-input v-model:value="formState.mysql!.charset" placeholder="charset"/>
-              </a-form-item>
             </a-form>
 
           </a-card>
@@ -52,13 +55,14 @@
                 <a-input-password v-model:value="formState.admin!.password" name="password" placeholder="password"/>
               </a-form-item>
               <a-form-item label="repassword" :rules="[{ required: true, message: 'Please input your password!' }]">
-                <a-input-password v-model:value="formState.admin!.password" placeholder="repassword"/>
+                <a-input-password v-model:value="formState.admin!.repassword" placeholder="repassword"/>
               </a-form-item>
 
             </a-form>
 
           </a-card>
-          <a-form :model="formState" @finish="handleFinish(formState)" :label-col="labelCol" :style="{marginTop:'20px'}">
+          <a-form :model="formState" @finish="handleFinish(formState)" :label-col="labelCol"
+                  :style="{marginTop:'20px'}">
 
             <a-form-item :wrapper-col="{ span: 14, offset: 4 }">
               <a-button type="primary" html-type="submit">testDB</a-button>
@@ -74,20 +78,22 @@
 </template>
 
 <script setup lang="ts">
-import type {CSSProperties, UnwrapRef} from 'vue';
+import type {CSSProperties} from 'vue';
 import {getDefaultSet, putSet} from "@/api/set";
 import type {SetInfo} from "@/interface/System";
 import {onMounted, reactive, ref} from "vue";
 
 
-const formState  = reactive<SetInfo>(
+const formState = reactive<SetInfo>(
     {
-    dbType: "",
-    sqlite: {filename: ""},
-    mysql: {host: "", port: 0, dbname: "", username: "", password: "", charset: ""},
-    reset: false,
-    admin: {username: "", password: ""}
-  }
+      dbType: "sqlite",
+      sqlite: {filename: ""},
+      mysql: {host: "", port: 0, dbname: "", username: "", password: "", charset: ""},
+      reset: false,
+      admin: {username: "", password: ""},
+      manage: {port: 0, webPath: ""},
+      api: {port: 0}
+    }
 )
 
 const handleFinish = (values: SetInfo) => {
@@ -98,16 +104,28 @@ const handleFinish = (values: SetInfo) => {
 
 onMounted(() => {
   getDefaultSet().then((si: SetInfo) => {
-    formState.dbType = <string>si.dbType
-    formState.sqlite!.filename = <string>si.sqlite!.filename
-    formState.mysql!.host = <string>si.mysql!.host
-    formState.mysql!.port = <number>si.mysql!.port
-    formState.mysql!.dbname = <string>si.mysql!.dbname
-    formState.mysql!.username = <string>si.mysql!.username
-    formState.mysql!.password = <string>si.mysql!.password
-    formState.mysql!.charset = <string>si.mysql!.charset
-    formState.admin!.username = <string>si.mysql!.username
-    formState.admin!.password = <string>si.mysql!.password
+    if (!si.admin) {
+      si.admin = {username: "", password: ""}
+    }
+    if (!si.mysql) {
+      si.mysql = {host: "", port: 0, dbname: "", username: "", password: "", charset: ""}
+    }
+    if (!si.sqlite) {
+      si.sqlite = {filename: ""}
+    }
+    formState.dbType = si.dbType;
+    formState.sqlite = si.sqlite;
+
+    // formState.dbType = <string>si.dbType;
+    // formState.sqlite!.filename = <string>si.sqlite!.filename;
+    // formState.mysql!.host = <string>si.mysql!.host;
+    // formState.mysql!.port = <number>si.mysql!.port;
+    // formState.mysql!.dbname = <string>si.mysql!.dbname;
+    // formState.mysql!.username = <string>si.mysql!.username;
+    // formState.mysql!.password = <string>si.mysql!.password;
+    // formState.mysql!.charset = <string>si.mysql!.charset;
+    // formState.admin!.username = <string>si.mysql!.username;
+    // formState.admin!.password = <string>si.mysql!.password;
   })
 })
 

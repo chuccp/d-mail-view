@@ -6,11 +6,24 @@ export interface System {
 export interface SetInfo {
     hasInit?: boolean
     dbType?: string
+    cachePath?:string
     reset?: boolean
     sqlite?: Sqlite
     mysql?: Mysql
     admin?: Admin
+    manage?: Manage
+    api?: Api
 }
+
+export interface Manage {
+    webPath?: string
+    port: number | Number | string
+}
+
+export interface Api {
+    port: number | Number | string
+}
+
 
 export interface Pagination {
     total: Number,
@@ -90,7 +103,9 @@ export interface Sqlite {
 export interface Admin {
     username?: string
     password?: string
+    repassword?:string
 }
+
 
 export interface Log {
     id?: Number | string | string[] | Number[]
@@ -99,6 +114,6 @@ export interface Log {
     stmp: string
     createTime?: Date
     updateTime?: Date
-    status: number |Number
+    status: number | Number
     result: string
 }
