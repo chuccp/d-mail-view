@@ -70,8 +70,6 @@ onMounted(() => {
       }else{
         formState.STMPSelectedTags = []
       }
-
-      console.log(formState)
     })
   } else {
     formState.token = randomHex(32);

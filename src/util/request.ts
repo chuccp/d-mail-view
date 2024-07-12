@@ -1,5 +1,6 @@
 import axios from 'axios'
 import {message} from "ant-design-vue";
+import {getLogin} from "@/util/localStore";
 
 const service = axios.create({
     baseURL: import.meta.env.VITE_BASE_HOST + import.meta.env.VITE_BASE_PATH,
@@ -7,6 +8,7 @@ const service = axios.create({
     timeout: 5000 // request timeout
 })
 service.interceptors.request.use(config => {
+    config.headers["Nonce"] = getLogin()
     return config
 }, error => {
     return Promise.reject(error)

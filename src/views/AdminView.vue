@@ -1,25 +1,40 @@
 <template>
   <a-layout id="components-layout-demo-custom-trigger" :style="{height: '100%'}">
     <a-layout-sider  :trigger="null" collapsible>
-      <div class="logo"/>
       <nav-menu></nav-menu>
     </a-layout-sider>
     <a-layout>
       <a-layout-header style="background: #fff; padding: 0">
-
+        <a-flex justify="flex-end" align="center" style="padding-right: 15px">
+            <a-dropdown>
+              <a class="ant-dropdown-link" style="background-color: transparent" @click.prevent>
+                <a-avatar :size="40">
+                  <template #icon><UserOutlined /></template>
+                </a-avatar>
+                <DownOutlined />
+              </a>
+              <template #overlay>
+                <a-menu>
+                  <a-menu-item key="0">
+                    <a>
+                     安全退出
+                    </a>
+                  </a-menu-item>
+                </a-menu>
+              </template>
+            </a-dropdown>
+        </a-flex>
       </a-layout-header>
-      <a-layout-content
-          :style="{ margin: '24px 16px', padding: '24px', background: '#fff', minHeight: '280px' }"
-      >
+      <a-layout-content :style="{ margin: '24px 16px', padding: '24px', background: '#fff', minHeight: '280px' }">
         <RouterView/>
       </a-layout-content>
     </a-layout>
   </a-layout>
 </template>
 <script setup lang="ts">
-import {RouterView} from "vue-router";
+import {RouterView, useRouter} from "vue-router";
 import NavMenu from "@/components/nav-menu.vue";
-
+const router = useRouter()
 </script>
 <style>
 #components-layout-demo-custom-trigger .trigger {
@@ -28,6 +43,9 @@ import NavMenu from "@/components/nav-menu.vue";
   padding: 0 24px;
   cursor: pointer;
   transition: color 0.3s;
+}
+.ant-dropdown-link{
+  background-color: transparent;
 }
 
 #components-layout-demo-custom-trigger .trigger:hover {

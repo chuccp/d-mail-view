@@ -10,7 +10,6 @@ export interface SetInfo {
     reset?: boolean
     sqlite?: Sqlite
     mysql?: Mysql
-    admin?: Admin
     manage?: Manage
     api?: Api
 }
@@ -18,6 +17,9 @@ export interface SetInfo {
 export interface Manage {
     webPath?: string
     port: number | Number | string
+    username?: string
+    password?: string
+    confirmPassword?:string
 }
 
 export interface Api {
@@ -100,10 +102,9 @@ export interface Sqlite {
     filename?: string
 }
 
-export interface Admin {
+export interface User {
     username?: string
     password?: string
-    repassword?:string
 }
 
 

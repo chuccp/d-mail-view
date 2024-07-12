@@ -1,7 +1,9 @@
 import {createRouter, createWebHashHistory, createWebHistory} from 'vue-router'
 import AdminView from '../views/AdminView.vue'
 import SettingView from '../views/SettingView.vue'
+import SignInView from '../views/SignInView.vue'
 import {getSet} from "@/api/set";
+import {useSystem} from "@/stores/system"
 
 const router = createRouter({
     history: createWebHashHistory(),
@@ -73,19 +75,31 @@ const router = createRouter({
             path: '/setting',
             name: 'setting',
             component: SettingView
+        },
+        {
+            path: '/signIn',
+            name: 'signIn',
+            component: SignInView
         }
 
     ]
 })
 
-let hasInit = false;
+
+
 
 router.beforeEach(async (to, from, next) => {
-    if (!hasInit || to.path=="/") {
-        hasInit = true;
+    const {system} = useSystem();
+    if (!system.hasInit || (!system.hasLogin && to.path!='/signIn' ) ||  to.path=="/") {
         const info = await getSet()
         if(info.hasInit){
-            next()
+            system.hasInit = true;
+            if(info.hasLogin){
+                system.hasLogin = true
+                next()
+            }else{
+                next('/signIn')
+            }
         }else{
             next('/setting')
         }
