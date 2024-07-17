@@ -86,26 +86,59 @@ const router = createRouter({
 })
 
 
-
-
 router.beforeEach(async (to, from, next) => {
     const {system} = useSystem();
-    if (!system.hasInit || (!system.hasLogin && to.path!='/signIn' ) ||  to.path=="/") {
+    if (!system.isInit) {
         const info = await getSet()
-        if(info.hasInit){
-            system.hasInit = true;
-            if(info.hasLogin){
-                system.hasLogin = true
-                next()
-            }else{
-                next('/signIn')
-            }
-        }else{
+        system.isInit = true
+        system.hasInit = info.hasInit
+        system.hasLogin = info.hasLogin
+    }
+    if (!system.hasInit) {
+        if (to.path != '/setting') {
             next('/setting')
+        } else {
+            next()
         }
-    } else {
+    } else if(!system.hasLogin){
+        if (to.path != '/signIn') {
+            next('/signIn')
+        } else {
+            next()
+        }
+    }else{
         next()
     }
+
+    // if(system.hasInit){
+    //     next()
+    // }else{
+    //     const info = await getSet()
+    //     system.hasInit = info.hasInit;
+    //     console.log(to.path)
+    //     if(!system.hasInit){
+    //         next('/setting')
+    //     }else{
+    //         next()
+    //     }
+    // }
+
+    // if (!system.hasInit || (!system.hasLogin && to.path!='/signIn' ) ||  to.path=="/") {
+    //     const info = await getSet()
+    //     if(info.hasInit){
+    //         system.hasInit = true;
+    //         if(info.hasLogin){
+    //             system.hasLogin = true
+    //             next()
+    //         }else{
+    //             next('/signIn')
+    //         }
+    //     }else{
+    //         next('/setting')
+    //     }
+    // } else {
+    //     next()
+    // }
 })
 
 export default router

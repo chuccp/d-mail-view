@@ -29,7 +29,10 @@ import type {CSSProperties} from "vue";
 import {reactive} from "vue";
 import type {User} from "@/interface/System";
 import {signIn} from "@/api/login";
-
+import {useRouter} from "vue-router";
+import {useSystem} from "@/stores/system";
+const router = useRouter()
+const {system} = useSystem();
 const formState = reactive<User>(
     {
       username: "111111",
@@ -41,7 +44,8 @@ const wrapperCol = {style: {marginBottom: "-10px"}};
 
 const onFinish = () => {
   signIn(formState.username!, formState.password!).then((v) => {
-    console.log(v)
+    system.isInit = false
+    router.push("/")
   });
 
 }

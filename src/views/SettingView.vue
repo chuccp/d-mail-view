@@ -85,7 +85,9 @@ import {getDefaultSet, putSet} from "@/api/set";
 import type {SetInfo} from "@/interface/System";
 import {onMounted, reactive, ref} from "vue";
 import {useRouter} from "vue-router";
+import {useSystem} from "@/stores/system";
 const router = useRouter()
+const {system} = useSystem();
 
 const formState = reactive<SetInfo>(
     {
@@ -100,6 +102,7 @@ const formState = reactive<SetInfo>(
 
 const handleFinish = (values: SetInfo) => {
   putSet(values).then((v)=>{
+    system.isInit = false
     router.push("/signIn")
   })
 }

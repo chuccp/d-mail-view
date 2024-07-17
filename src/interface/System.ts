@@ -1,12 +1,13 @@
 export interface System {
     hasInit?: boolean
     hasLogin?: boolean
+    isInit?: boolean
 }
 
 export interface SetInfo {
     hasInit?: boolean
     dbType?: string
-    cachePath?:string
+    cachePath?: string
     reset?: boolean
     sqlite?: Sqlite
     mysql?: Mysql
@@ -19,7 +20,7 @@ export interface Manage {
     port: number | Number | string
     username?: string
     password?: string
-    confirmPassword?:string
+    confirmPassword?: string
 }
 
 export interface Api {
