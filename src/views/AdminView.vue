@@ -1,28 +1,29 @@
 <template>
   <a-layout id="components-layout-demo-custom-trigger" :style="{height: '100%'}">
-    <a-layout-sider  :trigger="null" collapsible>
+    <a-layout-sider :trigger="null" collapsible>
       <nav-menu></nav-menu>
     </a-layout-sider>
     <a-layout>
       <a-layout-header style="background: #fff; padding: 0">
         <a-flex justify="flex-end" align="center" style="padding-right: 15px">
-            <a-dropdown>
-              <a class="ant-dropdown-link" style="background-color: transparent" @click.prevent>
-                <a-avatar :size="40">
-                  <template #icon><UserOutlined /></template>
-                </a-avatar>
-                <DownOutlined />
-              </a>
-              <template #overlay>
-                <a-menu>
-                  <a-menu-item key="0">
-                    <a>
-                     安全退出
-                    </a>
-                  </a-menu-item>
-                </a-menu>
-              </template>
-            </a-dropdown>
+          <a-dropdown>
+            <a class="ant-dropdown-link" style="background-color: transparent" @click.prevent>
+              <a-avatar :size="40">
+                <template #icon>
+                  <UserOutlined />
+                </template>
+              </a-avatar>
+            </a>
+            <template #overlay>
+              <a-menu>
+                <a-menu-item key="0">
+                  <a @click="doLogout">
+                    安全退出
+                  </a>
+                </a-menu-item>
+              </a-menu>
+            </template>
+          </a-dropdown>
         </a-flex>
       </a-layout-header>
       <a-layout-content :style="{ margin: '24px 16px', padding: '24px', background: '#fff', minHeight: '280px' }">
@@ -34,7 +35,24 @@
 <script setup lang="ts">
 import {RouterView, useRouter} from "vue-router";
 import NavMenu from "@/components/nav-menu.vue";
+import {logout} from "@/api/login";
+import {deleteLogin} from "@/util/localStore";
+import {useSystem} from "@/stores/system";
+
+import {
+  MailOutlined,UserOutlined
+} from '@ant-design/icons-vue';
+
 const router = useRouter()
+const {system} = useSystem();
+const doLogout = () => {
+  system.isInit = false
+  logout().then(() => {
+    deleteLogin()
+    router.push("/signIn")
+  })
+}
+
 </script>
 <style>
 #components-layout-demo-custom-trigger .trigger {
@@ -44,7 +62,8 @@ const router = useRouter()
   cursor: pointer;
   transition: color 0.3s;
 }
-.ant-dropdown-link{
+
+.ant-dropdown-link {
   background-color: transparent;
 }
 

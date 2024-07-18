@@ -113,7 +113,10 @@ export interface Log {
     id?: Number | string | string[] | Number[]
     name: string
     mail: string
+    content:string
     stmp: string
+    statusStr:string
+    subject:string
     createTime?: Date
     updateTime?: Date
     status: number | Number

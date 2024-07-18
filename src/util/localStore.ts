@@ -7,3 +7,7 @@ export function saveLogin(nonce: string) {
 export function getLogin(): string {
     return useLocalStorage("mail-login", "").value
 }
+
+export function deleteLogin(): string {
+    return useLocalStorage("mail-login", "").value = ""
+}

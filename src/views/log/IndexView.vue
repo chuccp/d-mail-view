@@ -1,5 +1,3 @@
-
-
 <template>
   <a-table :row-selection="{ type:'radio',selectedRowKeys: pageState.selectedRowKeys, onChange: onSelectChange }"
            :columns="columns"
@@ -16,7 +14,7 @@
 
       <div class="table-operations">
         <a-space>
-          <a-button >view</a-button>
+          <a-button @click="clickView">view</a-button>
         </a-space>
       </div>
 
@@ -27,14 +25,13 @@
 </template>
 <script setup lang="ts">
 
-import type {Log, Page,Pagination} from "@/interface/System";
+import type {Log, Page, Pagination} from "@/interface/System";
 import moment from "moment/moment";
-import {reactive,onMounted} from "vue";
+import {reactive, onMounted} from "vue";
 import {fetchList} from "@/api/log";
+import {useRouter} from "vue-router";
 
-
-
-
+const router = useRouter()
 const pageState = reactive<Page<Log>>({
   selectedRowKeys: [],
   loading: false,
@@ -66,8 +63,13 @@ const handleTableChange = (data: Pagination) => {
   queryPage()
 }
 
-const onSelectChange=(v: any)=>{
+const onSelectChange = (v: any) => {
   pageState.selectedRowKeys = v
+}
+
+const clickView = () => {
+  const id = pageState.selectedRowKeys![0]
+  router.push("/log/" + id)
 }
 
 const columns = [
@@ -79,11 +81,11 @@ const columns = [
   {
     title: 'subject',
     dataIndex: 'subject',
-  },  {
+  }, {
     title: 'status',
     className: 'statusStr',
     dataIndex: 'statusStr',
-  },{
+  }, {
     title: 'result',
     dataIndex: 'result',
   }, {

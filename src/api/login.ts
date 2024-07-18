@@ -15,6 +15,14 @@ export async function getSignIn() {
     return vv.data as AuthInfo
 }
 
+export async function logout() {
+    const vv = await request({
+        url: "/logout"
+    })
+    return vv.data as AuthInfo
+}
+
+
 export async function postSignIn(sign: string, Username: string, Nonce: string) {
     const vv = await request({
         url: "/signIn", method: 'post', data: {Response: sign, Username: Username, Nonce: Nonce}

@@ -19,6 +19,10 @@ const router = createRouter({
                     component: () => import('../views/log/IndexView.vue'),
                 },
                 {
+                    path: 'log/:id',
+                    component: () => import('../views/log/showView.vue'),
+                },
+                {
                     path: '/smtp',
                     redirect: "",
                     children: [{
