@@ -1,0 +1,53 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - v*
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout codebase
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Set up node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20.x'
+      - name: Install & Build
+        run: |
+          npm install
+          npm run build 
+
+      - name: Create ZIP archive
+        run: |
+          pushd dist || exit 1
+          zip -9vr ../d-mail-view.zip .
+          popd || exit 1
+          FILE=./d-mail-view.zip
+          DGST=$FILE.dgst
+          openssl dgst -md5    $FILE | sed 's/([^)]*)//g' >>$DGST
+          openssl dgst -sha1   $FILE | sed 's/([^)]*)//g' >>$DGST
+          openssl dgst -sha256 $FILE | sed 's/([^)]*)//g' >>$DGST
+          openssl dgst -sha512 $FILE | sed 's/([^)]*)//g' >>$DGST
+
+      - name: Upload ZIP file to Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: d-mail-view.zip
+          path: d-mail-view.zip
+
+      - name: Upload files to GitHub release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file_glob: true
+          file: ./d-mail-view.zip*
+          tag: ${{ github.ref }}
