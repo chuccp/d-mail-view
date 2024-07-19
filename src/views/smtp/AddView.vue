@@ -29,7 +29,7 @@
       </a-form-item>
 
       <a-form-item label="operate">
-        <a-button type="primary" @click="onTest">test</a-button>
+        <a-button danger @click="onTest">test</a-button>
         <a-button style="margin-left: 10px" @click="onSubmit">{{ id ? 'update' : 'save' }}</a-button>
       </a-form-item>
     </a-form>

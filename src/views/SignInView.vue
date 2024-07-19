@@ -35,8 +35,8 @@ const router = useRouter()
 const {system} = useSystem();
 const formState = reactive<User>(
     {
-      username: "111111",
-      password: "111111",
+      username: "",
+      password: "",
     }
 )
 

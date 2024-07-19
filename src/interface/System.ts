@@ -118,7 +118,9 @@ export interface Log {
     statusStr:string
     subject:string
     createTime?: Date
+    createTimeStr:string
     updateTime?: Date
+    updateTimeStr:string
     status: number | Number
     result: string
 }

@@ -14,10 +14,10 @@
     <a-descriptions-item label="status">{{ data.statusStr }}</a-descriptions-item>
     <a-descriptions-item label="result">{{ data.result }}</a-descriptions-item>
     <a-descriptions-item label="createTime">
-      {{ data.createTime }}
+      {{ data.createTimeStr }}
     </a-descriptions-item>
     <a-descriptions-item label="updateTime">
-      {{ data.updateTime }}
+      {{ data.updateTimeStr }}
     </a-descriptions-item>
   </a-descriptions>
 
@@ -50,6 +50,8 @@ const data = ref<Log>({
   statusStr:"",
   createTime: new Date(),
   updateTime: new Date(),
+  updateTimeStr:"",
+  createTimeStr:"",
   status: 0,
   result: ""
 })
@@ -60,8 +62,8 @@ onMounted(() => {
     const id: string = route.params.id as string
     getLog(id).then((v) => {
       console.log(v)
-      v.updateTime = moment(v.updateTime).format('YYYY-MM-DD HH:mm:ss')
-      v.createTime = moment(v.createTime).format('YYYY-MM-DD HH:mm:ss')
+      v.updateTimeStr = moment(v.updateTime).format('YYYY-MM-DD HH:mm:ss')
+      v.createTimeStr = moment(v.createTime).format('YYYY-MM-DD HH:mm:ss')
       data.value = v
     })
   }

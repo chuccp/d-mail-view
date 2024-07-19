@@ -36,9 +36,6 @@
                 <a-form-item label="password">
                   <a-input-password v-model:value="formState.mysql!.password" placeholder="password"/>
                 </a-form-item>
-                <a-form-item label="charset">
-                  <a-input v-model:value="formState.mysql!.charset" placeholder="charset"/>
-                </a-form-item>
               </template>
 
             </a-form>
@@ -47,17 +44,13 @@
 
           <a-card title="Admin Account" :style="{marginTop:'10px'}">
 
-            <a-form layout="vertical"  :wrapper-col="wrapperCol">
+            <a-form layout="vertical" :wrapper-col="wrapperCol">
               <a-form-item label="username">
                 <a-input v-model:value="formState.manage!.username" placeholder="username"/>
               </a-form-item>
               <a-form-item label="password" :rules="[{ required: true, message: 'Please input your password!' }]">
                 <a-input-password v-model:value="formState.manage!.password" name="password" placeholder="password"/>
               </a-form-item>
-              <a-form-item label="confirm password" :rules="[{ required: true, message: 'Please input your password!' }]">
-                <a-input-password v-model:value="formState.manage!.confirmPassword" placeholder="confirm password"/>
-              </a-form-item>
-
             </a-form>
 
           </a-card>
@@ -66,9 +59,9 @@
 
             <a-form-item :wrapper-col="{ span: 14, offset: 4 }">
               <template v-if="formState.dbType=='mysql'">
-                <a-button type="primary" html-type="submit">testDB</a-button>
+                <a-button @click="doTestConnection" danger>test connection</a-button>
               </template>
-              <a-button html-type="submit" style="margin-left: 10px">setup</a-button>
+              <a-button type="primary" html-type="submit" style="margin-left: 10px">setup</a-button>
             </a-form-item>
 
           </a-form>
@@ -81,11 +74,13 @@
 
 <script setup lang="ts">
 import type {CSSProperties} from 'vue';
-import {getDefaultSet, putSet} from "@/api/set";
+import {getDefaultSet, putSet, testConnection} from "@/api/set";
 import type {SetInfo} from "@/interface/System";
 import {onMounted, reactive, ref} from "vue";
 import {useRouter} from "vue-router";
 import {useSystem} from "@/stores/system";
+import {message} from "ant-design-vue";
+
 const router = useRouter()
 const {system} = useSystem();
 
@@ -93,17 +88,23 @@ const formState = reactive<SetInfo>(
     {
       dbType: "sqlite",
       sqlite: {filename: ""},
-      mysql: {host: "", port: 0, dbname: "", username: "", password: "", charset: ""},
+      mysql: {host: "", port: 3306, dbname: "", username: "", password: "", charset: ""},
       reset: false,
-      manage: {port: 0, webPath: "",username: "", password: "",confirmPassword:""},
+      manage: {port: 0, webPath: "", username: "", password: "", confirmPassword: ""},
       api: {port: 0}
     }
 )
 
 const handleFinish = (values: SetInfo) => {
-  putSet(values).then((v)=>{
+  putSet(values).then((v) => {
     system.isInit = false
     router.push("/signIn")
+  })
+}
+
+const doTestConnection = () => {
+  testConnection(formState).then((v) => {
+    message.success("success");
   })
 }
 
@@ -120,7 +121,7 @@ onMounted(() => {
 })
 
 
-const wrapperCol = {style: {marginBottom:"-10px"}};
+const wrapperCol = {style: {marginBottom: "-10px"}};
 
 const headerStyle: CSSProperties = {
   textAlign: 'center',
