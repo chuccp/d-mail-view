@@ -27,9 +27,11 @@
 
 import type {Log, Page, Pagination} from "@/interface/System";
 import moment from "moment/moment";
-import {reactive, onMounted} from "vue";
+import {reactive, onMounted, createVNode} from "vue";
 import {fetchList} from "@/api/log";
 import {useRouter} from "vue-router";
+import {Modal} from "ant-design-vue";
+import {ExclamationCircleOutlined} from "@ant-design/icons-vue";
 
 const router = useRouter()
 const pageState = reactive<Page<Log>>({
@@ -69,7 +71,18 @@ const onSelectChange = (v: any) => {
 
 const clickView = () => {
   const id = pageState.selectedRowKeys![0]
-  router.push("/log/" + id)
+  if(id){
+    router.push("/log/" + id)
+  }else{
+    Modal.confirm({
+      title: 'view',
+      icon: createVNode(ExclamationCircleOutlined),
+      content: 'please select one',
+      okText: 'ok',
+      cancelText: 'cancel',
+    });
+  }
+
 }
 
 const columns = [

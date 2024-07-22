@@ -42,11 +42,11 @@ const clickEdit = () => {
     router.push("/token/edit/" + id)
   } else {
     Modal.confirm({
-      title: '提示',
+      title: 'edit',
       icon: createVNode(ExclamationCircleOutlined),
-      content: '请选择一个',
-      okText: '确认',
-      cancelText: '取消',
+      content: 'please select one',
+      okText: 'ok',
+      cancelText: 'cancel',
     });
   }
 }
@@ -71,7 +71,7 @@ const clickDelete = () => {
 
   } else {
     Modal.confirm({
-      title: 'select',
+      title: 'delete',
       icon: createVNode(ExclamationCircleOutlined),
       content: 'please select one',
       okText: 'ok',

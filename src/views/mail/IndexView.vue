@@ -43,7 +43,7 @@ const clickEdit = () => {
     router.push("/mail/edit/" + id)
   } else {
     Modal.confirm({
-      title: 'select',
+      title: 'edit',
       icon: createVNode(ExclamationCircleOutlined),
       content: 'please select one',
       okText: 'ok',
@@ -68,13 +68,11 @@ const clickDelete = () => {
         })
       }
     });
-
-
   } else {
     Modal.confirm({
-      title: 'select',
+      title: 'delete',
       icon: createVNode(ExclamationCircleOutlined),
-      content: 'please',
+      content: 'please select one',
       okText: 'ok',
       cancelText: 'cancel',
     });
