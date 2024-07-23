@@ -16,8 +16,14 @@
     <a-descriptions-item label="createTime">
       {{ data.createTimeStr }}
     </a-descriptions-item>
-    <a-descriptions-item label="updateTime">
-      {{ data.updateTimeStr }}
+    <a-descriptions-item label="files">
+
+      <a-list size="small"  :data-source="data.fileArray">
+        <template #renderItem="{ item }">
+          <a-list-item>{{ item.name }}</a-list-item>
+        </template>
+      </a-list>
+
     </a-descriptions-item>
   </a-descriptions>
 
@@ -45,13 +51,15 @@ const data = ref<Log>({
   name: "",
   mail: "",
   content: "",
-  subject:"",
+  subject: "",
   stmp: "",
-  statusStr:"",
+  statusStr: "",
   createTime: new Date(),
   updateTime: new Date(),
-  updateTimeStr:"",
-  createTimeStr:"",
+  files: "",
+  fileArray: [],
+  updateTimeStr: "",
+  createTimeStr: "",
   status: 0,
   result: ""
 })
@@ -61,9 +69,11 @@ onMounted(() => {
   if (route.params.id) {
     const id: string = route.params.id as string
     getLog(id).then((v) => {
-      console.log(v)
       v.updateTimeStr = moment(v.updateTime).format('YYYY-MM-DD HH:mm:ss')
       v.createTimeStr = moment(v.createTime).format('YYYY-MM-DD HH:mm:ss')
+      if (v.files){
+        v.fileArray = JSON.parse(v.files)
+      }
       data.value = v
     })
   }

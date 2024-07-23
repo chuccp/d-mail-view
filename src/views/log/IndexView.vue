@@ -107,12 +107,6 @@ const columns = [
     customRender: (text: any) => {
       return moment(text.value).format('YYYY-MM-DD HH:mm:ss')
     }
-  }, {
-    title: 'updateTime',
-    dataIndex: 'updateTime',
-    customRender: (text: any) => {
-      return moment(text.value).format('YYYY-MM-DD HH:mm:ss')
-    }
   }
 ];
 

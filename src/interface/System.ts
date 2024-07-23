@@ -107,7 +107,10 @@ export interface User {
     username?: string
     password?: string
 }
-
+export interface File {
+    name?: string
+    filePath?: string
+}
 
 export interface Log {
     id?: Number | string | string[] | Number[]
@@ -119,6 +122,8 @@ export interface Log {
     subject:string
     createTime?: Date
     createTimeStr:string
+    fileArray:Array<File>
+    files:string
     updateTime?: Date
     updateTimeStr:string
     status: number | Number
