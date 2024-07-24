@@ -1,5 +1,5 @@
 <template>
-  <a-table :row-selection="{ type:'radio',selectedRowKeys: pageState.selectedRowKeys, onChange: onSelectChange }"
+  <a-table size="middle" :scroll="{ x: 500 }" :row-selection="{ type:'radio',selectedRowKeys: pageState.selectedRowKeys, onChange: onSelectChange }"
            :columns="columns"
            :pagination="pageState" @change="handleTableChange" :loading="pageState.loading"
            :row-key="(record:any) => record.id"

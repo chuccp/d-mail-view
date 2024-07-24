@@ -4,7 +4,7 @@
       <a-tag v-for="(item, index) in selectedTags" closable @close.prevent="tagsClose(item)">{{ item.name }}</a-tag>
       <a-tag style="background: #fff; border-style: dashed;cursor: pointer" @click="showSelect">
         <plus-outlined/>
-        New Mail
+        <slot></slot>
       </a-tag>
     </div>
     <select-modal @handleOk="handleOk" :selectionType="selectionType"

@@ -21,12 +21,12 @@
       <a-form-item ref="name" label="receiveEmail" name="receiveEmail">
         <tags-select-modal  v-model:selectedTags="formState.mailSelectedTags" @handleTableChange="mailHandleTableChange"
                            :page-state="mailPageState" @showSelect="mailShowSelect" :columns="mailColumns"
-                           :dataSource="mailDataSource"></tags-select-modal>
+                           :dataSource="mailDataSource">add mail</tags-select-modal>
       </a-form-item>
       <a-form-item ref="name" label="SMTP" name="SMTP">
         <tags-select-modal selectionType="radio" v-model:selectedTags="formState.SMTPSelectedTags" @handleTableChange="STMPHandleTableChange"
                            :page-state="STMPPageState" @showSelect="STMPShowSelect" :columns="STMPColumns"
-                           :dataSource="STMPDataSource"></tags-select-modal>
+                           :dataSource="STMPDataSource">select SMTP</tags-select-modal>
       </a-form-item>
       <a-form-item ref="name" label="isUse" name="isUse">
         <a-switch v-model:checked="formState.isUse"/>
