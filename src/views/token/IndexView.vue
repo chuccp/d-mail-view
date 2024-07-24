@@ -128,8 +128,8 @@ const columns = [
     dataIndex: 'receiveEmailsStr',
   },
   {
-    title: 'STMP',
-    dataIndex: 'STMPStr',
+    title: 'SMTP',
+    dataIndex: 'SMTPStr',
   },
   {
     title: 'isUse',

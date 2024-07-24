@@ -45,8 +45,8 @@ const items = reactive([
   {
     key: '3',
     icon: () => h(DesktopOutlined),
-    label: 'STMP',
-    title: 'STMP',
+    label: 'SMTP',
+    title: 'SMTP',
     path: '/smtp'
   },
   {

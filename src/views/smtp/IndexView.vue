@@ -26,8 +26,8 @@
 <script lang="ts" setup>
 import {RouterView, useRouter} from "vue-router";
 import {computed, createVNode, onMounted, reactive} from "vue";
-import type {STMP, Page, Pagination} from "@/interface/System";
-import {fetchList, deleteSTMP} from "@/api/stmp";
+import type {SMTP, Page, Pagination} from "@/interface/System";
+import {fetchList, deleteSMTP} from "@/api/smtp";
 import moment from "moment";
 import {Modal} from "ant-design-vue";
 import {ExclamationCircleOutlined} from '@ant-design/icons-vue';
@@ -65,7 +65,7 @@ const clickDelete = () => {
       okText: 'ok',
       cancelText: 'cancel',
       onOk: () => {
-        deleteSTMP(Number(id)).then(() => {
+        deleteSMTP(Number(id)).then(() => {
           queryPage()
         })
       }
@@ -81,18 +81,18 @@ const clickDelete = () => {
   }
 }
 
-const pageState = reactive<Page<STMP>>({
+const pageState = reactive<Page<SMTP>>({
   selectedRowKeys: [],
   loading: false,
   total: 0,
   current: 1,
   pageSize: 5,
-  list: new Array<STMP>()
+  list: new Array<SMTP>()
 })
 
 const queryPage = () => {
   pageState.loading = true
-  fetchList(pageState.current!, pageState.pageSize!).then((page: Page<STMP>) => {
+  fetchList(pageState.current!, pageState.pageSize!).then((page: Page<SMTP>) => {
     pageState.total = <number>page.total
     pageState.list = page.list
     pageState.loading = false

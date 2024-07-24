@@ -10,7 +10,7 @@
     <a-descriptions-item label="subject">{{ data.subject }}</a-descriptions-item>
     <a-descriptions-item label="content">{{ data.content }}</a-descriptions-item>
     <a-descriptions-item label="mail">{{ data.mail }}</a-descriptions-item>
-    <a-descriptions-item label="stmp">{{ data.stmp }}</a-descriptions-item>
+    <a-descriptions-item label="STMP">{{ data.smtp }}</a-descriptions-item>
     <a-descriptions-item label="status">{{ data.statusStr }}</a-descriptions-item>
     <a-descriptions-item label="result">{{ data.result }}</a-descriptions-item>
     <a-descriptions-item label="createTime">
@@ -52,7 +52,7 @@ const data = ref<Log>({
   mail: "",
   content: "",
   subject: "",
-  stmp: "",
+  smtp: "",
   statusStr: "",
   createTime: new Date(),
   updateTime: new Date(),

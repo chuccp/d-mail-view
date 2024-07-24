@@ -43,7 +43,7 @@ export interface Page<T> {
     selectedRowKeys?: Array<Number | string | undefined>
 }
 
-export interface STMP {
+export interface SMTP {
     id?: Number | string | string[] | Number[]
     host?: string
     port?: Number
@@ -80,10 +80,10 @@ export interface Token {
     token?: string
     receiveEmailIds?: any
     receiveEmails?: Array<Select>
-    STMP?: Select
-    STMPSelectedTags?: Array<Select>
+    SMTP?: Select
+    SMTPSelectedTags?: Array<Select>
     mailSelectedTags?: Array<Select>
-    STMPId?: any
+    SMTPId?: any
     isUse?: boolean
     createTime?: Date
     updateTime?: Date
@@ -117,7 +117,7 @@ export interface Log {
     name: string
     mail: string
     content:string
-    stmp: string
+    smtp: string
     statusStr:string
     subject:string
     createTime?: Date

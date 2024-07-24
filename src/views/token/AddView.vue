@@ -23,8 +23,8 @@
                            :page-state="mailPageState" @showSelect="mailShowSelect" :columns="mailColumns"
                            :dataSource="mailDataSource"></tags-select-modal>
       </a-form-item>
-      <a-form-item ref="name" label="STMP" name="STMP">
-        <tags-select-modal selectionType="radio" v-model:selectedTags="formState.STMPSelectedTags" @handleTableChange="STMPHandleTableChange"
+      <a-form-item ref="name" label="SMTP" name="SMTP">
+        <tags-select-modal selectionType="radio" v-model:selectedTags="formState.SMTPSelectedTags" @handleTableChange="STMPHandleTableChange"
                            :page-state="STMPPageState" @showSelect="STMPShowSelect" :columns="STMPColumns"
                            :dataSource="STMPDataSource"></tags-select-modal>
       </a-form-item>
@@ -42,7 +42,7 @@ import {onMounted, reactive, ref, watch} from "vue";
 import type {PageState, Token} from "@/interface/System";
 import {getToken, postToken, putToken} from "@/api/token";
 import {fetchMailList} from "@/api/mail";
-import {fetchSTMPList} from "@/api/stmp";
+import {fetchSMTPList} from "@/api/smtp";
 import {useRouter, useRoute} from "vue-router";
 import {randomHex} from "@/util/string";
 import moment from "moment/moment";
@@ -52,7 +52,7 @@ import TagsSelectModal from "@/components/tags-select-modal.vue";
 const router = useRouter()
 const route = useRoute()
 const id = ref(route.params.id)
-const formState = reactive<Token>({mailSelectedTags:[],STMPSelectedTags:[]})
+const formState = reactive<Token>({mailSelectedTags:[],SMTPSelectedTags:[]})
 const labelCol = {span: 5};
 const wrapperCol = {span: 13};
 onMounted(() => {
@@ -62,13 +62,13 @@ onMounted(() => {
       formState.id = Number(id)
       formState.token = v.token
       formState.isUse = v.isUse
-      formState.STMPId = v.STMPId
+      formState.SMTPId = v.SMTPId
       formState.subject = v.subject
       formState.mailSelectedTags=v.receiveEmails
-      if(v.STMP){
-        formState.STMPSelectedTags = [v.STMP!]
+      if(v.SMTP){
+        formState.SMTPSelectedTags = [v.SMTP!]
       }else{
-        formState.STMPSelectedTags = []
+        formState.SMTPSelectedTags = []
       }
     })
   } else {
@@ -159,7 +159,7 @@ const STMPColumns = [
 const querySTMP = (current: Number) => {
   STMPLoading.value = true
   STMPPageState.current = current
-  fetchSTMPList(STMPPageState.current!, STMPPageState.pageSize!).then((page) => {
+  fetchSMTPList(STMPPageState.current!, STMPPageState.pageSize!).then((page) => {
     STMPPageState.total = <number>page.total
     STMPDataSource.value = page.list!
     STMPLoading.value = false
@@ -174,13 +174,13 @@ const STMPHandleTableChange = ({current}: { current: number }) => {
 
 const onSubmit = () => {
   if (route.params.id) {
-    formState.STMPId = formState.STMPSelectedTags![0].id
+    formState.SMTPId = formState.SMTPSelectedTags![0].id
     formState.receiveEmailIds  =formState.mailSelectedTags!.map(v=>v.id).join(",")
     putToken(formState).then(() => {
       router.go(-1)
     })
   } else {
-    formState.STMPId = formState.STMPSelectedTags![0].id
+    formState.SMTPId = formState.SMTPSelectedTags![0].id
     formState.receiveEmailIds  =formState.mailSelectedTags!.map(v=>v.id).join(",")
     postToken(formState).then(() => {
       router.go(-1)

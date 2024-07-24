@@ -37,19 +37,19 @@
 </template>
 <script setup lang="ts">
 import {onMounted, reactive, ref} from "vue";
-import type {STMP} from "@/interface/System";
-import {getSTMP, postSTMP, putSTMP, testSTMP} from "@/api/stmp";
+import type {SMTP} from "@/interface/System";
+import {getSMTP, postSMTP, putSMTP, testSMTP} from "@/api/smtp";
 import {useRouter, useRoute} from "vue-router";
 import {message} from "ant-design-vue";
 
 const router = useRouter()
 const route = useRoute()
 const id = ref(route.params.id)
-const formState = reactive<STMP>({host: "", port: 25, mail: "", username: "", password: ""})
+const formState = reactive<SMTP>({host: "", port: 25, mail: "", username: "", password: ""})
 onMounted(() => {
   if (route.params.id) {
     const id: string = route.params.id as string
-    getSTMP(id).then((v) => {
+    getSMTP(id).then((v) => {
       formState.id = Number(id)
       formState.host = v.host
       formState.port = v.port
@@ -69,11 +69,11 @@ const wrapperCol = {span: 13};
 const onSubmit = () => {
 
   if (route.params.id) {
-    putSTMP(formState).then(() => {
+    putSMTP(formState).then(() => {
       router.go(-1)
     })
   } else {
-    postSTMP(formState).then(() => {
+    postSMTP(formState).then(() => {
       router.go(-1)
     })
   }
@@ -81,7 +81,7 @@ const onSubmit = () => {
 
 }
 const onTest = () => {
-  testSTMP(formState).then((v) => {
+  testSMTP(formState).then((v) => {
     message.success(v);
   })
 
