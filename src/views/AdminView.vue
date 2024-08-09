@@ -31,10 +31,15 @@
       </a-layout-content>
     </a-layout>
   </a-layout>
+
+  <download></download>
+
+
 </template>
 <script setup lang="ts">
 import {RouterView, useRouter} from "vue-router";
 import NavMenu from "@/components/nav-menu.vue";
+import Download from "@/components/download.vue";
 import {logout} from "@/api/login";
 import {deleteLogin} from "@/util/localStore";
 import {useSystem} from "@/stores/system";
@@ -55,6 +60,7 @@ const doLogout = () => {
 
 </script>
 <style>
+
 #components-layout-demo-custom-trigger .trigger {
   font-size: 18px;
   line-height: 64px;
