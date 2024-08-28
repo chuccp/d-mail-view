@@ -1,0 +1,65 @@
+<template>
+  <a-page-header
+    class="demo-page-header"
+    title="How to use"
+    @back="() => $router.go(-1)"
+  >
+
+    <vue-markdown-it :source="post" :options="options" />
+
+  </a-page-header>
+
+</template>
+<script setup lang="ts">
+import { VueMarkdownIt } from '@f3ve/vue-markdown-it'
+import { onMounted, reactive, ref } from 'vue'
+import { getDefaultSet, readSet } from '@/api/set'
+import type { SetInfo } from '@/interface/System'
+
+const options = {
+  html: true,
+  linkify: true
+}
+
+const getMD = (port: number | Number | string | undefined) => {
+
+  const md = '\n' +
+    '**GET Request Example**:\n' +
+    '\n' +
+    '```powershell\n' +
+    'curl \'http://127.0.0.1:'+port+'/sendMail?token={{token}}&content=this%20is%20a%20test\'\n' +
+    '```\n' +
+    '\n' +
+    '**POST Request Example**:\n' +
+    '\n' +
+    '```powershell\n' +
+    'curl -X POST \'http://127.0.0.1:'+port+'/sendMail\' \\\n' +
+    '--header \'Content-Type: application/x-www-form-urlencoded\' \\\n' +
+    '--data-urlencode \'token={{token}}\' \\\n' +
+    '--data-urlencode \'content=this%20is%20a%20test\'\n' +
+    '```'
+  return md
+
+}
+
+const post = ref("")
+
+onMounted(() => {
+
+  readSet().then((v) => {
+
+    post.value = getMD(v.api?.port)
+
+   
+
+  })
+
+})
+
+
+</script>
+
+
+<style scoped>
+
+</style>

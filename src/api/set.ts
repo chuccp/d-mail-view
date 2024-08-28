@@ -17,6 +17,11 @@ export async function getDefaultSet() {
     return vv.data as SetInfo
 }
 
+export async function readSet() {
+    const vv = await request({url: "/readSet"})
+    return vv.data as SetInfo
+}
+
 export async function testConnection(setInfo: SetInfo) {
     const vv = await request({url: "/testConnection",method: 'post', data: setInfo})
     return vv.data as string

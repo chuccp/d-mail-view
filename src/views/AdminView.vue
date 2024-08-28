@@ -32,7 +32,7 @@
     </a-layout>
   </a-layout>
 
-  <download></download>
+<!--  <download></download>-->
 
 
 </template>

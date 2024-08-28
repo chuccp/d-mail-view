@@ -35,22 +35,28 @@ const items = reactive([
     label: 'Home',
     title: 'Home',
     path: '/'
-  },{
+  }, {
     key: '2',
+    icon: () => h(PieChartOutlined),
+    label: 'Log',
+    title: 'Log',
+    path: '/log'
+  },{
+    key: '3',
     icon: () => h(InboxOutlined),
     label: 'Token',
     title: 'Token',
     path: '/token'
   },
   {
-    key: '3',
+    key: '4',
     icon: () => h(DesktopOutlined),
     label: 'SMTP',
     title: 'SMTP',
     path: '/smtp'
   },
   {
-    key: '4',
+    key: '5',
     icon: () => h(InboxOutlined),
     label: 'Mail',
     title: 'Mail',

@@ -16,6 +16,10 @@ const router = createRouter({
             children: [
                 {
                     path: '',
+                    component: () => import('../views/HomeView.vue'),
+                },
+                {
+                    path: 'log',
                     component: () => import('../views/log/IndexView.vue'),
                 },
                 {
