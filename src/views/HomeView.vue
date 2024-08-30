@@ -38,6 +38,15 @@ const getMD = (port: number | Number | string | undefined) => {
     '--data-urlencode \'token={{token}}\' \\\n' +
     '--data-urlencode \'content=this%20is%20a%20test\'\n' +
     '```'
+    +'\n**Example of Sending an Email with Attachments**:\n' +
+    '\n' +
+    '```powershell\n' +
+    'curl -X POST \'http://127.0.0.1:'+port+'/sendMail\' \\\n' +
+    '--form \'files=@"/111111.txt"\' \\\n' +
+    '--form \'files=@"/22222222222222.txt"\' \\\n' +
+    '--form \'token={{token}}"\' \\\n' +
+    '--form \'content=1212\'\n' +
+    '```'
   return md
 
 }
