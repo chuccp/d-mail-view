@@ -22,3 +22,15 @@ export async function getLog(id: number | string | string[]) {
     })
     return vv.data as Log
 }
+
+
+export async function download(file:string) {
+    const vv = await request({
+        url: "/downLoad",
+        params:{
+            file:file
+        }
+    })
+    return vv.data
+}
+

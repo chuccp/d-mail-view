@@ -4,9 +4,12 @@ import {getLogin} from "@/util/localStore";
 
 const service = axios.create({
     baseURL: import.meta.env.VITE_BASE_HOST + import.meta.env.VITE_BASE_PATH,
-    withCredentials: false, // send cookies when cross-domain requests
+    withCredentials: true, // send cookies when cross-domain requests
     timeout: 5000 // request timeout
 })
+export const getBaseUrl=()=>{
+    return import.meta.env.VITE_BASE_HOST + import.meta.env.VITE_BASE_PATH;
+}
 service.interceptors.request.use(config => {
     config.headers["Nonce"] = getLogin()
     return config

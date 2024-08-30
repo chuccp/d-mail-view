@@ -31,10 +31,6 @@
       </a-layout-content>
     </a-layout>
   </a-layout>
-
-<!--  <download></download>-->
-
-
 </template>
 <script setup lang="ts">
 import {RouterView, useRouter} from "vue-router";
