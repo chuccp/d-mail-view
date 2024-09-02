@@ -2,9 +2,7 @@
   <a-page-header
     class="demo-page-header"
     title="How to use"
-    @back="() => $router.go(-1)"
   >
-
     <vue-markdown-it :source="post" :options="options" />
 
   </a-page-header>
