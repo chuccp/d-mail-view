@@ -5,9 +5,6 @@
            :row-key="(record:any) => record.id"
            :data-source="pageState.list" bordered>
     <template #bodyCell="{ column, text }">
-      <template v-if="column.dataIndex === 'name'">
-        <a>{{ text }}</a>
-      </template>
     </template>
     <template #title>
 
