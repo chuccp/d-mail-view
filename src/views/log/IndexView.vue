@@ -1,8 +1,14 @@
 <template>
-  <a-table size="middle" :scroll="{ x: 500 }" :row-selection="{ type:'radio',selectedRowKeys: pageState.selectedRowKeys, onChange: onSelectChange }"
+  <a-table size="middle" :scroll="{ x: 500 }"
+           :row-selection="{ type:'radio',selectedRowKeys: pageState.selectedRowKeys, onChange: onSelectChange }"
            :columns="columns"
            :pagination="pageState" @change="handleTableChange" :loading="pageState.loading"
            :row-key="(record:any) => record.id"
+           :customRow="(record:any)=>{
+             return {onClick: () => {
+                    onSelectChange([record.id])
+             }}
+           }"
            :data-source="pageState.list" bordered>
     <template #bodyCell="{ column, text }">
     </template>
@@ -22,13 +28,13 @@
 </template>
 <script setup lang="ts">
 
-import type {Log, Page, Pagination} from "@/interface/System";
-import moment from "moment/moment";
-import {reactive, onMounted, createVNode} from "vue";
-import {fetchList} from "@/api/log";
-import {useRouter} from "vue-router";
-import {Modal} from "ant-design-vue";
-import {ExclamationCircleOutlined} from "@ant-design/icons-vue";
+import type { Log, Page, Pagination } from '@/interface/System'
+import moment from 'moment/moment'
+import { reactive, onMounted, createVNode } from 'vue'
+import { fetchList } from '@/api/log'
+import { useRouter } from 'vue-router'
+import { Modal } from 'ant-design-vue'
+import { ExclamationCircleOutlined } from '@ant-design/icons-vue'
 
 const router = useRouter()
 const pageState = reactive<Page<Log>>({
@@ -63,21 +69,24 @@ const handleTableChange = (data: Pagination) => {
 }
 
 const onSelectChange = (v: any) => {
+  console.log(v)
   pageState.selectedRowKeys = v
 }
 
+
+
 const clickView = () => {
   const id = pageState.selectedRowKeys![0]
-  if(id){
-    router.push("/log/" + id)
-  }else{
+  if (id) {
+    router.push('/log/' + id)
+  } else {
     Modal.confirm({
       title: 'view',
       icon: createVNode(ExclamationCircleOutlined),
       content: 'please select one',
       okText: 'ok',
-      cancelText: 'cancel',
-    });
+      cancelText: 'cancel'
+    })
   }
 
 }
@@ -86,18 +95,18 @@ const columns = [
   {
     title: 'token',
     className: 'token',
-    dataIndex: 'token',
+    dataIndex: 'token'
   },
   {
     title: 'subject',
-    dataIndex: 'subject',
+    dataIndex: 'subject'
   }, {
     title: 'status',
     className: 'statusStr',
-    dataIndex: 'statusStr',
+    dataIndex: 'statusStr'
   }, {
     title: 'result',
-    dataIndex: 'result',
+    dataIndex: 'result'
   }, {
     title: 'createTime',
     dataIndex: 'createTime',
@@ -105,7 +114,7 @@ const columns = [
       return moment(text.value).format('YYYY-MM-DD HH:mm:ss')
     }
   }
-];
+]
 
 </script>
 <style scoped>

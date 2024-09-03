@@ -3,6 +3,11 @@
            :columns="columns"
            :pagination="pageState" @change="handleTableChange" :loading="pageState.loading"
            :row-key="(record:any) => record.id"
+           :customRow="(record:any)=>{
+             return {onClick: () => {
+                    onSelectChange([record.id])
+             }}
+           }"
            :data-source="pageState.list" bordered>
     <template #bodyCell="{ column, text }">
     </template>
