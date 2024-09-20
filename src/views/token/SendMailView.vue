@@ -25,16 +25,16 @@
 
       </a-form-item>
 
-      <a-form-item ref="name" label="subject" name="subject">
+      <a-form-item ref="name" label="Subject" name="subject">
         <a-input v-model:value="formState.subject" />
       </a-form-item>
 
 
-      <a-form-item ref="name" label="content" name="content">
+      <a-form-item ref="name" label="Content" name="content">
         <a-textarea v-model:value="formState.content" placeholder="content" :rows="4" />
       </a-form-item>
 
-      <a-form-item label="operate">
+      <a-form-item label="Operate">
         <a-button style="margin-left: 10px" @click="onSubmit">Send Mail</a-button>
       </a-form-item>
 
@@ -45,18 +45,29 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref } from 'vue'
+import { onMounted, reactive, ref } from 'vue'
 import type { SendMail } from '@/interface/System'
+import { getToken } from '@/api/token'
+import { randomHex } from '@/util/string'
+import { useRoute } from 'vue-router'
 
 const formState = reactive<SendMail>({ content: '', recipients: [], subject: '', token: '', SMTP: '' })
 const labelCol = { span: 5 }
 const wrapperCol = { span: 13 }
 const options = Array()
-
+const route = useRoute()
 const onSubmit = () => {
 
 }
-
+onMounted(() => {
+  if (route.params.id) {
+    const id: string = route.params.id as string
+    getToken(id).then((v) => {
+      formState.SMTP = v.SMTP!.name!
+      formState.recipients = v.receiveEmails!.map(v => v.mail!)
+    })
+  }
+})
 </script>
 
 

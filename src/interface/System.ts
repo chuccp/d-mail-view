@@ -79,7 +79,7 @@ export interface Token {
   subject?: string
   token?: string
   receiveEmailIds?: any
-  receiveEmails?: Array<Select>
+  receiveEmails?: Array<Mail>
   SMTP?: Select
   SMTPSelectedTags?: Array<Select>
   mailSelectedTags?: Array<Select>
