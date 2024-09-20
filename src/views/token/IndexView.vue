@@ -18,6 +18,7 @@
           <a-button @click="clickAdd">add</a-button>
           <a-button @click="clickEdit">edit</a-button>
           <a-button @click="clickDelete">delete</a-button>
+          <a-button @click="clickSendMail">sendMail</a-button>
         </a-space>
       </div>
 
@@ -80,6 +81,23 @@ const clickDelete = () => {
       cancelText: 'cancel',
     });
   }
+}
+
+const clickSendMail = ()=>{
+
+  if (pageState.selectedRowKeys!.length > 0) {
+    const id = pageState.selectedRowKeys![0]
+    router.push("/token/sendMail/" + id)
+  } else {
+    Modal.confirm({
+      title: 'sendMail',
+      icon: createVNode(ExclamationCircleOutlined),
+      content: 'please select one',
+      okText: 'ok',
+      cancelText: 'cancel',
+    });
+  }
+
 }
 
 const pageState = reactive<Page<Token>>({

@@ -75,6 +75,10 @@ const router = createRouter({
                         path: 'edit/:id',
                         name: 'token-edit',
                         component: () => import('../views/token/AddView.vue')
+                    }, {
+                        path: 'sendMail/:id',
+                        name: 'token-sendMail',
+                        component: () => import('../views/token/SendMailView.vue')
                     }]
                 }
             ],
