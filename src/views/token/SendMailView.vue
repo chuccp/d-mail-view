@@ -47,24 +47,29 @@
 <script setup lang="ts">
 import { onMounted, reactive, ref } from 'vue'
 import type { SendMail } from '@/interface/System'
-import { getToken } from '@/api/token'
+import { getToken, sendMailByToken } from '@/api/token'
 import { randomHex } from '@/util/string'
 import { useRoute } from 'vue-router'
+import { Modal } from 'ant-design-vue'
 
-const formState = reactive<SendMail>({ content: '', recipients: [], subject: '', token: '', SMTP: '' })
+const formState = reactive<SendMail>({ SMTPId: '', content: '', recipients: [], subject: '' })
 const labelCol = { span: 5 }
 const wrapperCol = { span: 13 }
 const options = Array()
 const route = useRoute()
 const onSubmit = () => {
-
+  sendMailByToken(formState).then((v) => {
+    Modal.info({ title: 'success' })
+  })
 }
 onMounted(() => {
   if (route.params.id) {
     const id: string = route.params.id as string
     getToken(id).then((v) => {
-      formState.SMTP = v.SMTP!.name!
+      formState.SMTPId = v.SMTPId
       formState.recipients = v.receiveEmails!.map(v => v.mail!)
+      formState.subject = v.subject
+      formState.SMTP = v.SMTPStr
     })
   }
 })

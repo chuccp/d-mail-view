@@ -85,18 +85,12 @@ export interface Token {
   mailSelectedTags?: Array<Select>
   SMTPId?: any
   isUse?: boolean
+  SMTPStr?:string
   createTime?: Date
   updateTime?: Date
 }
 
-export interface SendMail {
-  recipients?: string[]
-  subject?: string
-  token: string
-  content: string
-  SMTP: string
 
-}
 
 
 export interface Mysql {
@@ -138,4 +132,12 @@ export interface Log {
   updateTimeStr: string
   status: number | Number
   result: string
+}
+
+export interface SendMail {
+  SMTPId: Number |string
+  recipients?: string[]
+  subject?: string
+  content: string
+  SMTP?:string
 }
