@@ -18,7 +18,7 @@
               <a-menu>
                 <a-menu-item key="0">
                   <a @click="doLogout">
-                    安全退出
+                    secure exit
                   </a>
                 </a-menu-item>
               </a-menu>
