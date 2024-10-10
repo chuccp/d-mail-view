@@ -61,6 +61,13 @@ const items = reactive([
     label: 'Mail',
     title: 'Mail',
     path: '/mail'
+  },
+  {
+    key: '6',
+    icon: () => h(InboxOutlined),
+    label: 'Setting',
+    title: 'Setting',
+    path: '/set'
   }])
 
 
