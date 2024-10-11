@@ -12,6 +12,11 @@ export async function putSet(setInfo: SetInfo) {
     return vv.data as System
 }
 
+export async function putReSet(setInfo: SetInfo) {
+    const vv = await request({url: "/reSet", method: 'put', data: setInfo})
+    return vv.data as System
+}
+
 export async function getDefaultSet() {
     const vv = await request({url: "/defaultSet"})
     return vv.data as SetInfo
