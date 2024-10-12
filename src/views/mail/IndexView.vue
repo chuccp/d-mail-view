@@ -10,7 +10,6 @@
            }"
            :data-source="pageState.list" bordered>
     <template #bodyCell="{ column, text }">
-      {{ text }}
     </template>
     <template #title>
 
