@@ -2,6 +2,7 @@ export interface System {
   hasInit?: boolean
   hasLogin?: boolean
   isInit?: boolean
+  port?: number
 }
 
 export interface SetInfo {
@@ -85,12 +86,10 @@ export interface Token {
   mailSelectedTags?: Array<Select>
   SMTPId?: any
   isUse?: boolean
-  SMTPStr?:string
+  SMTPStr?: string
   createTime?: Date
   updateTime?: Date
 }
-
-
 
 
 export interface Mysql {
@@ -135,9 +134,9 @@ export interface Log {
 }
 
 export interface SendMail {
-  SMTPId: Number |string
+  SMTPId: Number | string
   recipients?: string[]
   subject?: string
   content: string
-  SMTP?:string
+  SMTP?: string
 }

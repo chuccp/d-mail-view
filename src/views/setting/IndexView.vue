@@ -20,10 +20,12 @@
     <a-card :bordered="false" title="http port" :style="{marginTop:'10px'}">
       <a-form :model="formState" layout="vertical">
         <a-form-item label="api port">
-          <a-input-number v-model:value="formState.api!.port" name="api port" style="width: 100%" placeholder="api port" :min="1" :max="65535" />
+          <a-input-number v-model:value="formState.api!.port" name="api port" style="width: 100%" placeholder="api port"
+                          :min="1" :max="65535" />
         </a-form-item>
         <a-form-item label="manage port">
-          <a-input-number v-model:value="formState.manage!.port" name="manage port" style="width: 100%" placeholder="manage port" :min="1" :max="65535" />
+          <a-input-number v-model:value="formState.manage!.port" name="manage port" style="width: 100%"
+                          placeholder="manage port" :min="1" :max="65535" />
         </a-form-item>
       </a-form>
     </a-card>
@@ -42,6 +44,7 @@ import { getDefaultSet, putReSet, readSet, reStart } from '@/api/set'
 import { onMounted, reactive } from 'vue'
 import type { SetInfo } from '@/interface/System'
 import { useRouter } from 'vue-router'
+import { useSystem } from '@/stores/system'
 
 const router = useRouter()
 const formState = reactive<SetInfo>(
@@ -57,11 +60,24 @@ const formState = reactive<SetInfo>(
 const handleFinish = (values: SetInfo) => {
   putReSet(values).then((v) => {
     reStart().then((v) => {
-      router.push('/signIn')
+      location(values.manage!.port!)
+    }).catch((v) => {
+      location(values.manage!.port!)
     })
   })
 }
 
+const location = (port: number|string|Number) => {
+  if (import.meta.env.DEV) {
+    const system = useSystem()
+    system.system.port =parseInt(String(port))
+    router.push('/signIn')
+  }else{
+    const url = new URL(document.location.origin)
+    url.port = String(port)
+    window.location.href = url.origin
+  }
+}
 onMounted(() => {
   readSet().then((si: SetInfo) => {
     formState.dbType = si.dbType
