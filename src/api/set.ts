@@ -17,6 +17,12 @@ export async function putReSet(setInfo: SetInfo) {
     return vv.data as System
 }
 
+
+export async function reStart() {
+    const vv = await request({url: "/reStart?date="+new Date().getTime(), method: 'POST'})
+    return vv.data as string
+}
+
 export async function getDefaultSet() {
     const vv = await request({url: "/defaultSet"})
     return vv.data as SetInfo
