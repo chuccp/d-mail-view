@@ -47,7 +47,7 @@ const getMD = (port: number | Number | string | undefined) => {
     '```\n'+
     '**POST submission json format example**:\n' +
     '```powershell\n' +
-    'curl -X POST \'http://127.0.0.1:12567/sendMail\' \\\n' +
+    'curl -X POST \'http://127.0.0.1:'+port+'/sendMail\' \\\n' +
     '--header \'Content-Type: application/json\' \\\n' +
     '--data \'{\n' +
     '"token": "{{token}}",\n' +
