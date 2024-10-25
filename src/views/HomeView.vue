@@ -25,7 +25,7 @@ const getMD = (port: number | Number | string | undefined) => {
     '**GET Request Example**:\n' +
     '\n' +
     '```powershell\n' +
-    'curl \'http://127.0.0.1:'+port+'/sendMail?token={{token}}&content=this%20is%20a%20test\'\n' +
+    'curl \'http://127.0.0.1:'+port+'/sendMail?token={{token}}&content=this%20is%20a%20test&recipients=aaa@mail.com,bbb@mail.com\'\n' +
     '```\n' +
     '\n' +
     '**POST Request Example**:\n' +
@@ -44,6 +44,16 @@ const getMD = (port: number | Number | string | undefined) => {
     '--form \'files=@"/22222222222222.txt"\' \\\n' +
     '--form \'token={{token}}"\' \\\n' +
     '--form \'content=1212\'\n' +
+    '```\n'+
+    '**POST submission json format example**:\n' +
+    '```powershell\n' +
+    'curl -X POST \'http://127.0.0.1:12567/sendMail\' \\\n' +
+    '--header \'Content-Type: application/json\' \\\n' +
+    '--data \'{\n' +
+    '"token": "{{token}}",\n' +
+    '"content":"this is a test",\n' +
+    '"recipients":["aaa@mail.com","bbb@mail.com"]\n' +
+    '}\'\n' +
     '```'
   return md
 
