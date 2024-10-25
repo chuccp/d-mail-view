@@ -25,7 +25,7 @@ const getMD = (port: number | Number | string | undefined) => {
     '**GET Request Example**:\n' +
     '\n' +
     '```powershell\n' +
-    'curl \'http://127.0.0.1:'+port+'/sendMail?token={{token}}&content=this%20is%20a%20test&recipients=aaa@mail.com,bbb@mail.com\'\n' +
+    'curl \'http://127.0.0.1:'+port+'/sendMail?subject=test&token={{token}}&content=this%20is%20a%20test&recipients=aaa@mail.com,bbb@mail.com\'\n' +
     '```\n' +
     '\n' +
     '**POST Request Example**:\n' +
