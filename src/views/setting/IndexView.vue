@@ -1,4 +1,7 @@
 <template>
+  <a-space  direction="vertical" class="space-alert"   >
+    <a-alert message="Reconfigure the management account password and port number." type="info" @close="onCloseAlert" closable  show-icon />
+  </a-space>
   <a-page-header
     class="demo-page-header"
     title="SETTING"
@@ -66,7 +69,9 @@ const handleFinish = (values: SetInfo) => {
     })
   })
 }
+const onCloseAlert = () => {
 
+}
 const location = (port: number|string|Number) => {
   if (import.meta.env.DEV) {
     const system = useSystem()

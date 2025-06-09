@@ -1,4 +1,7 @@
 <template>
+  <a-space  direction="vertical" class="space-alert"   >
+    <a-alert message="Here you can manage the email addresses used for receiving emails." type="info" @close="onCloseAlert" closable  show-icon />
+  </a-space>
   <a-table size="middle" :scroll="{ x: 500 }" :row-selection="{ type:'radio',selectedRowKeys: pageState.selectedRowKeys, onChange: onSelectChange }"
            :columns="columns"
            :pagination="pageState" @change="handleTableChange" :loading="pageState.loading"
@@ -54,6 +57,10 @@ const clickEdit = () => {
   }
 }
 
+const onCloseAlert = () => {
+  // do nothing
+}
+
 const clickDelete = () => {
   if (pageState.selectedRowKeys!.length > 0) {
     const id = pageState.selectedRowKeys![0]
@@ -95,7 +102,8 @@ const queryPage = () => {
   fetchList(pageState.current!, pageState.pageSize!).then((page: Page<Mail>) => {
     pageState.total = <number>page.total
     pageState.list = page.list
-    pageState.loading = false
+    pageState.loading = false;
+
   }).catch(() => {
     pageState.loading = false
   })
@@ -143,5 +151,8 @@ const columns = [
 th.column-money,
 td.column-money {
   text-align: right !important;
+}
+.space-alert{
+  margin-bottom: 20px;
 }
 </style>

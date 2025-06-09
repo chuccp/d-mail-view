@@ -1,4 +1,7 @@
 <template>
+  <a-space  direction="vertical" class="space-alert"   >
+    <a-alert message="Here you can manage the SMTP server used for sending emails." type="info" @close="onCloseAlert" closable  show-icon />
+  </a-space>
   <a-table size="middle"  :scroll="{ x: 500 }" :row-selection="{ type:'radio',selectedRowKeys: pageState.selectedRowKeys, onChange: onSelectChange }"
            :columns="columns"
            :pagination="pageState" @change="handleTableChange" :loading="pageState.loading"
@@ -52,6 +55,9 @@ const clickEdit = () => {
       cancelText: 'cancel',
     });
   }
+}
+const onCloseAlert = () => {
+
 }
 
 const clickDelete = () => {
@@ -153,5 +159,8 @@ const columns = [
 th.column-money,
 td.column-money {
   text-align: right !important;
+}
+.space-alert{
+  margin-bottom: 20px;
 }
 </style>

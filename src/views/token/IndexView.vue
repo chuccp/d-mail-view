@@ -1,4 +1,7 @@
 <template>
+  <a-space  direction="vertical" class="space-alert"   >
+    <a-alert message="Here you can generate and manage tokens, edit the email address for receiving emails, and configure SMTP. A token serves as a unique identifier for email sending, bound to both the email recipient and the SMTP server. Before creating a new token, you need to first add the receiving email address and SMTP configuration." type="info" @close="onCloseAlert" closable  show-icon />
+  </a-space>
   <a-table size="middle" :scroll="{ x: 500 }" :row-selection="{ type:'radio',selectedRowKeys: pageState.selectedRowKeys, onChange: onSelectChange }"
            :columns="columns"
            :pagination="pageState" @change="handleTableChange" :loading="pageState.loading"
@@ -27,8 +30,8 @@
   </a-table>
 </template>
 <script lang="ts" setup>
-import {RouterView, useRouter} from "vue-router";
-import {computed, createVNode, onMounted, reactive} from "vue";
+import {useRouter} from "vue-router";
+import {createVNode, onMounted, reactive} from "vue";
 import type {Token, Page, Pagination} from "@/interface/System";
 import {fetchList, deleteToken} from "@/api/token";
 import moment from "moment";
@@ -52,6 +55,10 @@ const clickEdit = () => {
       cancelText: 'cancel',
     });
   }
+}
+
+const  onCloseAlert = () => {
+  console.log('onCloseAlert')
 }
 
 const clickDelete = () => {
@@ -177,7 +184,8 @@ th.column-money,
 td.column-money {
   text-align: right !important;
 }
-.token{
+.space-alert{
+  margin-bottom: 20px;
 
 }
 </style>

@@ -1,4 +1,7 @@
 <template>
+  <a-space  direction="vertical" class="space-alert"   >
+    <a-alert message="Here you can view the email sending logs, such as success or failure status." type="info" @close="onCloseAlert" closable  show-icon />
+  </a-space>
   <a-table size="middle" :scroll="{ x: 500 }"
            :row-selection="{ type:'radio',selectedRowKeys: pageState.selectedRowKeys, onChange: onSelectChange }"
            :columns="columns"
@@ -67,6 +70,8 @@ const handleTableChange = (data: Pagination) => {
   pageState.pageSize = data.pageSize
   queryPage()
 }
+const onCloseAlert = () => {
+}
 
 const onSelectChange = (v: any) => {
   console.log(v)
@@ -118,5 +123,7 @@ const columns = [
 
 </script>
 <style scoped>
-
+.space-alert{
+  margin-bottom: 20px;
+}
 </style>
