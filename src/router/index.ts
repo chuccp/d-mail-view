@@ -29,65 +29,102 @@ const router = createRouter({
         {
           path: '/smtp',
           redirect: '',
-          children: [{
-            path: '',
-            name: 'smtp',
-            component: () => import('../views/smtp/IndexView.vue')
-          }, {
-            path: 'add',
-            name: 'smtp-add',
-            component: () => import('../views/smtp/AddView.vue')
-          }, {
-            path: 'edit/:id',
-            name: 'smtp-edit',
-            component: () => import('../views/smtp/AddView.vue')
-          }]
+          children: [
+            {
+              path: '',
+              name: 'smtp',
+              component: () => import('../views/smtp/IndexView.vue')
+            },
+            {
+              path: 'add',
+              name: 'smtp-add',
+              component: () => import('../views/smtp/AddView.vue')
+            },
+            {
+              path: 'edit/:id',
+              name: 'smtp-edit',
+              component: () => import('../views/smtp/AddView.vue')
+            }
+          ]
         },
         {
           path: '/mail',
           redirect: '',
-          children: [{
-            path: '',
-            name: 'mail',
-            component: () => import('../views/mail/IndexView.vue')
-          }, {
-            path: 'add',
-            name: 'mail-add',
-            component: () => import('../views/mail/AddView.vue')
-          }, {
-            path: 'edit/:id',
-            name: 'mail-edit',
-            component: () => import('../views/mail/AddView.vue')
-          }]
+          children: [
+            {
+              path: '',
+              name: 'mail',
+              component: () => import('../views/mail/IndexView.vue')
+            },
+            {
+              path: 'add',
+              name: 'mail-add',
+              component: () => import('../views/mail/AddView.vue')
+            },
+            {
+              path: 'edit/:id',
+              name: 'mail-edit',
+              component: () => import('../views/mail/AddView.vue')
+            }
+          ]
+        },
+        {
+          path: '/schedule',
+          redirect: '',
+          children: [
+            {
+              path: '',
+              name: 'schedule',
+              component: () => import('../views/schedule/IndexView.vue')
+            },
+            {
+              path: 'add',
+              name: 'schedule-add',
+              component: () => import('../views/schedule/AddView.vue')
+            },
+            {
+              path: 'edit/:id',
+              name: 'schedule-edit',
+              component: () => import('../views/schedule/AddView.vue')
+            }
+          ]
         },
         {
           path: '/token',
           redirect: '',
-          children: [{
-            path: '',
-            name: 'token',
-            component: () => import('../views/token/IndexView.vue')
-          }, {
-            path: 'add',
-            name: 'token-add',
-            component: () => import('../views/token/AddView.vue')
-          }, {
-            path: 'edit/:id',
-            name: 'token-edit',
-            component: () => import('../views/token/AddView.vue')
-          }, {
-            path: 'sendMail/:id',
-            name: 'token-sendMail',
-            component: () => import('../views/token/SendMailView.vue')
-          }]
-        }, {
+          children: [
+            {
+              path: '',
+              name: 'token',
+              component: () => import('../views/token/IndexView.vue')
+            },
+            {
+              path: 'add',
+              name: 'token-add',
+              component: () => import('../views/token/AddView.vue')
+            },
+            {
+              path: 'edit/:id',
+              name: 'token-edit',
+              component: () => import('../views/token/AddView.vue')
+            },
+            {
+              path: 'sendMail/:id',
+              name: 'token-sendMail',
+              component: () => import('../views/token/SendMailView.vue')
+            }
+          ]
+        },
+        {
           path: '/set',
           redirect: '',
-          children: [{
-            path: '',
-            name: 'set',
-            component: () => import('../views/setting/IndexView.vue')
-          }]
+          children: [
+            {
+              path: '',
+              name: 'set',
+              component: () => import('../views/setting/IndexView.vue')
+            }
+          ]
         }
       ]
     },
@@ -101,10 +138,8 @@ const router = createRouter({
       name: 'signIn',
       component: SignInView
     }
-
   ]
 })
-
 
 router.beforeEach(async (to, from, next) => {
   const { system } = useSystem()

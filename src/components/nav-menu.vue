@@ -4,7 +4,14 @@
 </template>
 <script setup lang="ts">
 
-import {UploadOutlined, UserOutlined, PieChartOutlined, DesktopOutlined, InboxOutlined} from "@ant-design/icons-vue";
+import {
+  UploadOutlined,
+  UserOutlined,
+  PieChartOutlined,
+  DesktopOutlined,
+  InboxOutlined,
+  ScheduleOutlined
+} from '@ant-design/icons-vue'
 import {reactive, h, onMounted} from "vue";
 import {useRoute, useRouter} from "vue-router";
 
@@ -47,23 +54,29 @@ const items = reactive([
     label: 'Token',
     title: 'Token',
     path: '/token'
+  },{
+    key: '4',
+    icon: () => h(ScheduleOutlined),
+    label: 'schedule',
+    title: 'schedule',
+    path: '/schedule'
   },
   {
-    key: '4',
+    key: '5',
     icon: () => h(DesktopOutlined),
     label: 'SMTP',
     title: 'SMTP',
     path: '/smtp'
   },
   {
-    key: '5',
+    key: '6',
     icon: () => h(InboxOutlined),
     label: 'Mail',
     title: 'Mail',
     path: '/mail'
   },
   {
-    key: '6',
+    key: '7',
     icon: () => h(InboxOutlined),
     label: 'Setting',
     title: 'Setting',
