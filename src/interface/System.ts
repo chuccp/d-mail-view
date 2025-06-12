@@ -152,7 +152,7 @@ export interface Schedule {
   url?: string
   method?: string
   body?: string
-  headers?: string
+  headers: Header[]
   useTemplate?: boolean
   isUse?: boolean
   template?: string
