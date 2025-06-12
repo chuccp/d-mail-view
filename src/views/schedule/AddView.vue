@@ -26,14 +26,14 @@
           <a-select-option value="POST">POST</a-select-option>
         </a-select>
       </a-form-item>
-      <a-form-item ref="headers" label="headers" name="headers">
+      <a-form-item v-for="(header, index) in dynamicHeaders.headers" :key="index" :ref="'headers'+index" v-bind="index != 0 ? {} : {}"  :label="index==0?'headers':''" name="headers">
         <a-input-group size="large">
           <a-row :gutter="5">
             <a-col :span="8">
-          <a-input   placeholder="Enter the Key for the header" />
+              <a-input  v-model:value="header.name"  placeholder="Enter the Key for the header" />
             </a-col>
             <a-col :span="16">
-            <a-input   placeholder="Enter the Value for the header" style="width: 80%; margin-right: 8px" />
+            <a-input  v-model:value="header.value"   placeholder="Enter the Value for the header" style="width: 80%; margin-right: 8px" />
               <MinusCircleOutlined class="dynamic-delete-button" />
             </a-col>
           </a-row>
@@ -61,10 +61,12 @@
       </a-form-item>
 
       <a-form-item ref="cron" label="cron" name="cron">
+
         <a-input v-model:value="formState.cron" placeholder="Enter the Schedule cron." />
       </a-form-item>
 
       <a-form-item label="operate">
+        <a-button danger >test</a-button>
         <a-button style="margin-left: 10px">save</a-button>
       </a-form-item>
 
@@ -74,7 +76,7 @@
 </template>
 <script setup lang="ts">
 import { reactive } from 'vue'
-import type { Schedule } from '@/interface/System'
+import type { Header, Schedule } from '@/interface/System'
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons-vue';
 const formItemLayoutWithOutLabel = {
   wrapperCol: {
@@ -85,6 +87,7 @@ const formItemLayoutWithOutLabel = {
 const labelCol = {span: 5};
 const wrapperCol = {span: 13};
 const formState = reactive<Schedule>({})
+const dynamicHeaders = reactive<{ headers: Header[] }>({headers:[{name:'aaa',value:'bbb'},{name:'ccc',value:'ddd'}]})
 </script>
 
 <style scoped>
