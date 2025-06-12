@@ -64,11 +64,10 @@
         <a-textarea v-model:value="formState.template" placeholder="Enter the Template for the response" :rows="4" />
       </a-form-item>
 
-
       <a-form-item ref="isSendOnlyByError" label="Only Error Send Email" name="isSendOnlyByError">
         <a-switch v-model:checked="formState.isSendOnlyByError" placeholder="Send an email only when the HTTP status of the request is not 200."/>
-        <a-space  direction="vertical" class="space-alert"  style="margin-left: 10px;line-height:10px" >
-          <a-alert message="Send an email only when the HTTP status of the request is not 200." type="info"  closable  show-icon />
+        <a-space  direction="vertical" class="space-alert"  style="margin-left: 10px;line-height:10px;height: 10px" >
+          <a-alert style="padding:2px 10px 2px 10px ;" message="Send an email only when the HTTP status of the response is not 200." type="info"    show-icon />
         </a-space>
       </a-form-item>
 
