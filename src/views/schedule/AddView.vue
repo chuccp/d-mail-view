@@ -19,6 +19,9 @@
       <a-form-item ref="cron" label="cron" name="cron">
         <a-input v-model:value="formState.cron" placeholder="Enter the Schedule cron." />
       </a-form-item>
+
+
+
       <a-divider>Request</a-divider>
       <a-form-item ref="url" label="url" name="url">
         <a-input v-model:value="formState.url" placeholder="Enter the URL for the request" />
@@ -60,10 +63,18 @@
       <a-form-item label="template" v-if="formState.useTemplate">
         <a-textarea v-model:value="formState.template" placeholder="Enter the Template for the response" :rows="4" />
       </a-form-item>
+
+
+      <a-form-item ref="isSendOnlyByError" label="Only Error Send Email" name="isSendOnlyByError">
+        <a-switch v-model:checked="formState.isSendOnlyByError" placeholder="Send an email only when the HTTP status of the request is not 200."/>
+        <a-space  direction="vertical" class="space-alert"  style="margin-left: 10px;line-height:10px" >
+          <a-alert message="Send an email only when the HTTP status of the request is not 200." type="info"  closable  show-icon />
+        </a-space>
+      </a-form-item>
+
       <a-form-item ref="name" label="isUse" name="isUse">
         <a-switch v-model:checked="formState.isUse"/>
       </a-form-item>
-
 
 
       <a-form-item label="operate">

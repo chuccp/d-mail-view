@@ -155,5 +155,6 @@ export interface Schedule {
   headers: Header[]
   useTemplate?: boolean
   isUse?: boolean
+  isSendOnlyByError?: boolean
   template?: string
 }
