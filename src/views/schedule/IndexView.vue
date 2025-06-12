@@ -34,7 +34,8 @@
 import moment from 'moment/moment'
 import { reactive } from 'vue'
 import type { Mail, Page } from '@/interface/System'
-
+import { useRouter } from 'vue-router'
+const router = useRouter()
 const pageState = reactive<Page<Mail>>({
   selectedRowKeys: [],
   loading: false,
@@ -72,7 +73,7 @@ const onCloseAlert = () => {
 }
 
 const clickAdd = () => {
-
+  router.push("/schedule/add")
 }
 const clickEdit = () => {
 

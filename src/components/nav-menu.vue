@@ -5,8 +5,6 @@
 <script setup lang="ts">
 
 import {
-  UploadOutlined,
-  UserOutlined,
   PieChartOutlined,
   DesktopOutlined,
   InboxOutlined,

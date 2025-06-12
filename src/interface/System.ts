@@ -28,11 +28,10 @@ export interface Api {
   port: number | Number | string
 }
 
-
 export interface Pagination {
-  total: Number,
-  current: Number,
-  pageSize: Number,
+  total: Number
+  current: Number
+  pageSize: Number
 }
 
 export interface Page<T> {
@@ -61,7 +60,6 @@ export interface Mail {
   mail?: string
   createTime?: Date
   updateTime?: Date
-
 }
 
 export interface Select {
@@ -70,9 +68,9 @@ export interface Select {
 }
 
 export interface PageState {
-  total: Number | number,
-  current: Number | number,
-  pageSize: Number | number,
+  total: Number | number
+  current: Number | number
+  pageSize: Number | number
 }
 
 export interface Token {
@@ -90,7 +88,6 @@ export interface Token {
   createTime?: Date
   updateTime?: Date
 }
-
 
 export interface Mysql {
   host?: String
@@ -139,4 +136,24 @@ export interface SendMail {
   subject?: string
   content: string
   SMTP?: string
+}
+export interface Header{
+  name?: string
+  value?: string
+}
+export interface Schedule {
+  id?: Number | string | string[] | Number[]
+  name?: string
+  cron?: string
+  status?: number | Number
+  createTime?: Date
+  updateTime?: Date
+  token?: string
+  url?: string
+  method?: string
+  body?: string
+  headers?: string
+  useTemplate?: boolean
+  isUse?: boolean
+  template?: string
 }
