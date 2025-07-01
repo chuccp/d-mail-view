@@ -1,5 +1,5 @@
 <template>
-  <a-space  direction="vertical" class="space-alert"   >
+  <a-space  direction="vertical" class="space-alert" v-if="!log_alert_hide"  >
     <a-alert message="Here you can view the email sending logs, such as success or failure status." type="info" @close="onCloseAlert" closable  show-icon />
   </a-space>
   <a-table size="middle" :scroll="{ x: 500 }"
@@ -38,6 +38,13 @@ import { fetchList } from '@/api/log'
 import { useRouter } from 'vue-router'
 import { Modal } from 'ant-design-vue'
 import { ExclamationCircleOutlined } from '@ant-design/icons-vue'
+import { useViewConfig } from '@/stores/system'
+const viewConfig =useViewConfig()
+const log_alert_hide = viewConfig.getConfig("log_alert_hide")
+
+const  onCloseAlert = () => {
+  viewConfig.setConfig("log_alert_hide", true)
+}
 
 const router = useRouter()
 const pageState = reactive<Page<Log>>({
@@ -69,8 +76,6 @@ const handleTableChange = (data: Pagination) => {
   pageState.current = data.current
   pageState.pageSize = data.pageSize
   queryPage()
-}
-const onCloseAlert = () => {
 }
 
 const onSelectChange = (v: any) => {

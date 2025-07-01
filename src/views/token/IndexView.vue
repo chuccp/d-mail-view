@@ -1,5 +1,5 @@
 <template>
-  <a-space  direction="vertical" class="space-alert"   >
+  <a-space  direction="vertical" class="space-alert" v-if="!token_alert_hide"  >
     <a-alert message="Here you can generate and manage tokens, edit the email address for receiving emails, and configure SMTP. A token serves as a unique identifier for email sending, bound to both the email recipient and the SMTP server. Before creating a new token, you need to first add the receiving email address and SMTP configuration." type="info" @close="onCloseAlert" closable  show-icon />
   </a-space>
   <a-table size="middle" :scroll="{ x: 500 }" :row-selection="{ type:'radio',selectedRowKeys: pageState.selectedRowKeys, onChange: onSelectChange }"
@@ -37,6 +37,14 @@ import {fetchList, deleteToken} from "@/api/token";
 import moment from "moment";
 import {Modal} from "ant-design-vue";
 import {ExclamationCircleOutlined} from '@ant-design/icons-vue';
+import { useViewConfig } from '@/stores/system'
+const viewConfig =useViewConfig()
+
+const token_alert_hide = viewConfig.getConfig("token_alert_hide")
+
+const  onCloseAlert = () => {
+  viewConfig.setConfig("token_alert_hide", true)
+}
 
 const router = useRouter()
 const clickAdd = () => {
@@ -57,9 +65,7 @@ const clickEdit = () => {
   }
 }
 
-const  onCloseAlert = () => {
-  console.log('onCloseAlert')
-}
+
 
 const clickDelete = () => {
   if (pageState.selectedRowKeys!.length > 0) {

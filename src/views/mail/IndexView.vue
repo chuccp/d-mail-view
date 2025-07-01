@@ -1,5 +1,5 @@
 <template>
-  <a-space  direction="vertical" class="space-alert"   >
+  <a-space  direction="vertical" class="space-alert" v-if="!mail_alert_hide"   >
     <a-alert message="Here you can manage the email addresses used for receiving emails." type="info" @close="onCloseAlert" closable  show-icon />
   </a-space>
   <a-table size="middle" :scroll="{ x: 500 }" :row-selection="{ type:'radio',selectedRowKeys: pageState.selectedRowKeys, onChange: onSelectChange }"
@@ -36,7 +36,14 @@ import {fetchList, deleteMail} from "@/api/mail";
 import moment from "moment";
 import {Modal} from "ant-design-vue";
 import {ExclamationCircleOutlined} from '@ant-design/icons-vue';
+import { useViewConfig } from '@/stores/system'
 
+const viewConfig =useViewConfig()
+const mail_alert_hide = viewConfig.getConfig("mail_alert_hide")
+
+const  onCloseAlert = () => {
+  viewConfig.setConfig("mail_alert_hide", true)
+}
 
 const router = useRouter()
 const clickAdd = () => {
@@ -57,9 +64,6 @@ const clickEdit = () => {
   }
 }
 
-const onCloseAlert = () => {
-  // do nothing
-}
 
 const clickDelete = () => {
   if (pageState.selectedRowKeys!.length > 0) {

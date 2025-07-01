@@ -47,7 +47,6 @@ const onFinish = () => {
     system.isInit = false
     router.push("/")
   });
-
 }
 
 

@@ -1,5 +1,5 @@
 <template>
-  <a-space  direction="vertical" class="space-alert"   >
+  <a-space  direction="vertical" class="space-alert" v-if="!scheduled_alert_hide"   >
     <a-alert message="Implement project monitoring by using scheduled tasks to read a specified API and send emails based on the information provided by the api." type="info" @close="onCloseAlert" closable  show-icon />
   </a-space>
   <a-table  size="middle" :scroll="{ x: 500 }" :row-selection="{ type:'radio',selectedRowKeys: pageState.selectedRowKeys, onChange: onSelectChange }"
@@ -35,6 +35,15 @@ import moment from 'moment/moment'
 import { reactive } from 'vue'
 import type { Mail, Page } from '@/interface/System'
 import { useRouter } from 'vue-router'
+import { useViewConfig } from '@/stores/system'
+
+const viewConfig =useViewConfig()
+const scheduled_alert_hide = viewConfig.getConfig("scheduled_alert_hide")
+
+const  onCloseAlert = () => {
+  viewConfig.setConfig("scheduled_alert_hide", true)
+}
+
 const router = useRouter()
 const pageState = reactive<Page<Mail>>({
   selectedRowKeys: [],
@@ -68,9 +77,7 @@ const columns = [
     }
   }
 ];
-const onCloseAlert = () => {
 
-}
 
 const clickAdd = () => {
   router.push("/schedule/add")

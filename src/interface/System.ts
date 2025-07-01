@@ -5,6 +5,7 @@ export interface System {
   port?: number
 }
 
+
 export interface SetInfo {
   hasInit?: boolean
   dbType?: string

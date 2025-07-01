@@ -1,5 +1,5 @@
 <template>
-  <a-space  direction="vertical" class="space-alert"   >
+  <a-space  direction="vertical" class="space-alert" v-if="!set_alert_hide"  >
     <a-alert message="Reconfigure the management account password and port number." type="info" @close="onCloseAlert" closable  show-icon />
   </a-space>
   <a-page-header
@@ -47,7 +47,14 @@ import { getDefaultSet, putReSet, readSet, reStart } from '@/api/set'
 import { onMounted, reactive } from 'vue'
 import type { SetInfo } from '@/interface/System'
 import { useRouter } from 'vue-router'
-import { useSystem } from '@/stores/system'
+import { useSystem, useViewConfig } from '@/stores/system'
+
+const viewConfig =useViewConfig()
+const set_alert_hide = viewConfig.getConfig("set_alert_hide")
+
+const  onCloseAlert = () => {
+  viewConfig.setConfig("set_alert_hide", true)
+}
 
 const router = useRouter()
 const formState = reactive<SetInfo>(
@@ -68,9 +75,6 @@ const handleFinish = (values: SetInfo) => {
       location(values.manage!.port!)
     })
   })
-}
-const onCloseAlert = () => {
-
 }
 const location = (port: number|string|Number) => {
   if (import.meta.env.DEV) {

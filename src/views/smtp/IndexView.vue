@@ -1,5 +1,5 @@
 <template>
-  <a-space  direction="vertical" class="space-alert"   >
+  <a-space  direction="vertical" class="space-alert"  v-if="!smtp_alert_hide" >
     <a-alert message="Here you can manage the SMTP server used for sending emails." type="info" @close="onCloseAlert" closable  show-icon />
   </a-space>
   <a-table size="middle"  :scroll="{ x: 500 }" :row-selection="{ type:'radio',selectedRowKeys: pageState.selectedRowKeys, onChange: onSelectChange }"
@@ -36,7 +36,14 @@ import {fetchList, deleteSMTP} from "@/api/smtp";
 import moment from "moment";
 import {Modal} from "ant-design-vue";
 import {ExclamationCircleOutlined} from '@ant-design/icons-vue';
+import { useViewConfig } from '@/stores/system'
 
+const viewConfig =useViewConfig()
+const smtp_alert_hide = viewConfig.getConfig("smtp_alert_hide")
+
+const  onCloseAlert = () => {
+  viewConfig.setConfig("smtp_alert_hide", true)
+}
 
 const router = useRouter()
 const clickAdd = () => {
@@ -56,9 +63,7 @@ const clickEdit = () => {
     });
   }
 }
-const onCloseAlert = () => {
 
-}
 
 const clickDelete = () => {
   if (pageState.selectedRowKeys!.length > 0) {
