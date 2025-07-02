@@ -16,7 +16,7 @@
       <template #title>
         <div class="table-operations">
           <a-space wrap>
-            <a-tag v-for="(item, index) in selectedTags" :key="index" closable @close.prevent="tagsClose(item)">{{ item.name }}
+            <a-tag v-for="(item) in selectedTags" :key="item.name" closable @close.prevent="tagsClose(item)">{{ item.name }}
             </a-tag>
           </a-space>
         </div>

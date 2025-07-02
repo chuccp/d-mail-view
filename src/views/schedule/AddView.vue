@@ -193,8 +193,13 @@ const tokenDataSource = [
 const addDomain = () => {
   formState.headers.push({ name: '', value: '' })
 }
-const tokenShowSelect = () => {
 
+const queryToken = (current: Number) => {
+
+}
+
+const tokenShowSelect = () => {
+  queryToken(tokenPageState!.current!)
 }
 const tokenHandleTableChange = (v: any) => {}
 </script>

@@ -12,6 +12,17 @@ export async function fetchList(pageNo: Number, pageSize: Number) {
   return vv.data as (Page<Token>)
 }
 
+export async function fetchTokenList(pageNo: Number, pageSize: Number) {
+
+  const vv = await request({
+    url: '/token', params: {
+      pageNo: pageNo,
+      pageSize: pageSize
+    }
+  })
+  return vv.data as (Page<Token>)
+}
+
 export async function getToken(id: number | string | string[]) {
   const vv = await request({
     url: '/token/' + id

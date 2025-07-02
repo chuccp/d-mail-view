@@ -1,7 +1,7 @@
 <template>
   <a-form-item-rest>
     <div>
-      <a-tag v-for="(item, index) in selectedTags"  :key="index" closable @close.prevent="tagsClose(item)">{{ item.name }}</a-tag>
+      <a-tag v-for="(item) in selectedTags"  :key="item.name" closable @close.prevent="tagsClose(item)">{{ item.name }}</a-tag>
       <a-tag style="background: #fff; border-style: dashed;cursor: pointer" @click="showSelect">
         <plus-outlined/>
         <slot></slot>
