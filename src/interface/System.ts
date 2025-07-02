@@ -150,6 +150,7 @@ export interface Schedule {
   createTime?: Date
   updateTime?: Date
   token?: string
+  tokenSelectedTags?: Array<Select>
   url?: string
   method?: string
   body?: string

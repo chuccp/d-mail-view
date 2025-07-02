@@ -1,7 +1,7 @@
 <template>
   <a-form-item-rest>
     <div>
-      <a-tag v-for="(item, index) in selectedTags" closable @close.prevent="tagsClose(item)">{{ item.name }}</a-tag>
+      <a-tag v-for="(item, index) in selectedTags"  :key="index" closable @close.prevent="tagsClose(item)">{{ item.name }}</a-tag>
       <a-tag style="background: #fff; border-style: dashed;cursor: pointer" @click="showSelect">
         <plus-outlined/>
         <slot></slot>
@@ -9,6 +9,7 @@
     </div>
     <select-modal @handleOk="handleOk" :selectionType="selectionType"
                   v-model:selectedTags="selectedTags"
+                  v-model:selectedRowKeys="selectedRowKeys"
                   @handleTableChange="handleTableChange"
                   :pageState="props.pageState"
                   :columns="props.columns"
@@ -34,12 +35,15 @@ const props = defineProps({
 
 const selectedTags =defineModel<Array<Select>>('selectedTags')
 
+const selectedRowKeys = ref<Array<number>>([])
+
 
 const emits = defineEmits([ "showSelect", "handleTableChange"])
 const open = ref<boolean>(false)
 
 const tagsClose = (item: Select) => {
   selectedTags.value = selectedTags.value!.filter((v) => v.id != item.id)
+  selectedRowKeys.value = selectedRowKeys.value.filter((v) => v != item.id)
 }
 const showSelect = () => {
   open.value = true

@@ -16,7 +16,7 @@
       <template #title>
         <div class="table-operations">
           <a-space wrap>
-            <a-tag v-for="(item, index) in selectedTags" closable @close.prevent="tagsClose(item)">{{ item.name }}
+            <a-tag v-for="(item, index) in selectedTags" :key="index" closable @close.prevent="tagsClose(item)">{{ item.name }}
             </a-tag>
           </a-space>
         </div>
@@ -27,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-import {ref, watch} from "vue";
+import { onMounted, ref, watch } from 'vue'
 import type {Select} from "@/interface/System";
 
 const props = defineProps({
@@ -39,7 +39,7 @@ const props = defineProps({
 })
 const selectedTags =defineModel<Array<Select>>('selectedTags')
 const open =defineModel<Boolean>('open')
-const selectedRowKeys = ref<Array<number>>([])
+const selectedRowKeys =defineModel<Array<number>>('selectedRowKeys')
 
 watch(() => props.dataSource, (newValue, oldValue) => {
   if(selectedTags.value){
@@ -50,9 +50,10 @@ watch(() => props.dataSource, (newValue, oldValue) => {
   }
 })
 
+
 const tagsClose = (item: Select) => {
   selectedTags.value = selectedTags.value!.filter((v) => v.id != item.id);
-  selectedRowKeys.value = selectedRowKeys.value.filter((v) => v != item.id)
+  selectedRowKeys.value = selectedRowKeys.value!.filter((v) => v != item.id)
 }
 const handleTableChange = (v: any) => {
   emits('handleTableChange', v)
