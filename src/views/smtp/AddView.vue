@@ -67,7 +67,7 @@ const wrapperCol = {span: 13};
 
 
 const onSubmit = () => {
-
+  formState.port = Number(formState.port)
   if (route.params.id) {
     putSMTP(formState).then(() => {
       router.go(-1)
@@ -81,6 +81,7 @@ const onSubmit = () => {
 
 }
 const onTest = () => {
+  formState.port = Number(formState.port)
   testSMTP(formState).then((v) => {
     message.success(v);
   })
