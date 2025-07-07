@@ -9,10 +9,6 @@
         <a-input v-model:value="formState.name" placeholder="Enter the Schedule name." />
       </a-form-item>
       <a-form-item ref="token" label="token" name="token">
-        <a-input v-model:value="formState.token" placeholder="Select the Schedule token." />
-      </a-form-item>
-
-      <a-form-item ref="token" label="token" name="token">
         <tags-select-modal
           selectionType="radio"
           v-model:selectedTags="formState.tokenSelectedTags"
@@ -26,7 +22,10 @@
       </a-form-item>
 
       <a-form-item ref="cron" label="cron" name="cron">
-        <a-input v-model:value="formState.cron" placeholder="Enter the Schedule cron." />
+        <a-input
+          v-model:value="formState.cron"
+          placeholder="Enter the Schedule cron.precise to the second"
+        />
       </a-form-item>
 
       <a-divider>Request</a-divider>
@@ -125,83 +124,110 @@
       </a-form-item>
 
       <a-form-item label="operate">
-        <a-button danger>test</a-button>
-        <a-button style="margin-left: 10px">save</a-button>
+        <a-button danger @click="onTest">test</a-button>
+        <a-button style="margin-left: 10px" @click="onSubmit">{{
+          id ? 'update' : 'save'
+        }}</a-button>
       </a-form-item>
     </a-form>
   </a-page-header>
 </template>
 <script setup lang="ts">
-import { reactive } from 'vue'
-import type { Header, PageState, Schedule } from '@/interface/System'
+import { reactive, ref, watch } from 'vue'
+import type { Header, PageState, Schedule, Token } from '@/interface/System'
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons-vue'
 import TagsSelectModal from '@/components/tags-select-modal.vue'
+import { fetchTokenList } from '@/api/token'
+import { getSchedule, postSchedule, putSchedule, sendMailBySchedule } from '@/api/schedule'
+import { useRoute, useRouter } from 'vue-router'
+import { message } from 'ant-design-vue'
+
+const router = useRouter()
+const route = useRoute()
+
+const id = ref(route.params.id)
 
 const labelCol = { span: 5 }
 const wrapperCol = { span: 13 }
 const formState = reactive<Schedule>({ headers: [] })
-
+const tokenLoading = ref<Boolean>(false)
+const tokenDataSource = ref<Array<Token>>([])
 const tokenPageState = reactive<PageState>({
   total: 0,
   current: 1,
-  pageSize: 2,
+  pageSize: 2
 })
 
 const tokenColumns = [
   {
     title: 'token',
     className: 'token',
-    dataIndex: 'token',
-  },{
+    dataIndex: 'token'
+  },
+  {
     title: 'subject',
-    dataIndex: 'subject',
+    dataIndex: 'subject'
   },
   {
     title: 'receiveEmails',
-    dataIndex: 'receiveEmailsStr',
+    dataIndex: 'receiveEmailsStr'
   },
   {
     title: 'SMTP',
-    dataIndex: 'SMTPStr',
-  },
+    dataIndex: 'SMTPStr'
+  }
 ]
-
 
 const removeDomain = (header: Header) => {
   formState.headers.splice(formState!.headers.indexOf(header), 1)
 }
-
-
-const tokenDataSource = [
-  {
-    id: 1,
-    token: 'token',
-    name:'name',
-    subject: 'subject',
-    receiveEmailsStr: 'receiveEmails',
-    SMTPStr: 'SMTP',
-  },  {
-    id: 2,
-    token: 'token2',
-    name:'name2',
-    subject: 'subject2',
-    receiveEmailsStr: 'receiveEmails2',
-    SMTPStr: 'SMTP2',
-  },
-]
 
 const addDomain = () => {
   formState.headers.push({ name: '', value: '' })
 }
 
 const queryToken = (current: Number) => {
-
+  tokenLoading.value = true
+  tokenPageState.current = current
+  fetchTokenList(tokenPageState.current!, tokenPageState.pageSize!)
+    .then((page) => {
+      tokenPageState.total = <number>page.total
+      tokenDataSource.value = page.list!
+      tokenLoading.value = false
+    })
+    .catch(() => {
+      tokenLoading.value = false
+    })
 }
+
 
 const tokenShowSelect = () => {
   queryToken(tokenPageState!.current!)
 }
 const tokenHandleTableChange = (v: any) => {}
+
+const onSubmit = () => {
+  if (formState!.tokenSelectedTags && formState!.tokenSelectedTags!.length > 0) {
+    formState.token = formState!.tokenSelectedTags![0].name
+  }
+  if (route.params.id) {
+    putSchedule(formState).then(() => {
+      router.go(-1)
+    })
+  } else {
+    postSchedule(formState).then(() => {
+      router.go(-1)
+    })
+  }
+}
+const onTest = () => {
+  if (formState!.tokenSelectedTags && formState!.tokenSelectedTags!.length > 0) {
+    formState.token = formState!.tokenSelectedTags![0].name
+  }
+  sendMailBySchedule(formState).then((v) => {
+    message.success(v)
+  })
+}
 </script>
 
 <style scoped>

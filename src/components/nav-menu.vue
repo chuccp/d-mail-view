@@ -55,8 +55,8 @@ const items = reactive([
   },{
     key: '4',
     icon: () => h(ScheduleOutlined),
-    label: 'schedule',
-    title: 'schedule',
+    label: 'Schedule',
+    title: 'Schedule',
     path: '/schedule'
   },
   {

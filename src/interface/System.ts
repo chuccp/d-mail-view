@@ -78,6 +78,7 @@ export interface Token {
   id?: Number | string | string[] | Number[]
   subject?: string
   token?: string
+  name?:string
   receiveEmailIds?: any
   receiveEmails?: Array<Mail>
   SMTP?: Select

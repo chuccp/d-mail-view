@@ -42,11 +42,13 @@ const open =defineModel<Boolean>('open')
 const selectedRowKeys =defineModel<Array<number>>('selectedRowKeys')
 
 watch(() => props.dataSource, (newValue, oldValue) => {
+
   if(selectedTags.value){
     const selectIds =  selectedTags.value.map((v)=>v.id);
     selectedRowKeys.value = newValue!.filter((v1:any)=>selectIds.includes(v1.id)).map((v2:any)=>v2.id);
+    console.log("====",selectedRowKeys.value)
   }else{
-    selectedRowKeys.value = newValue!.map((v2:any)=>v2.id);
+    selectedRowKeys.value = [];
   }
 })
 
