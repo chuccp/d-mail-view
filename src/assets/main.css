@@ -14,7 +14,7 @@ a, .green {
   padding: 3px;
 }
 .token {
-  width: 200px;
+  max-width: 300px;
   word-break: break-all; /* 任意位置换行 */
   /* 或使用 overflow-wrap: break-word; */
 }

@@ -125,9 +125,9 @@
 
       <a-form-item label="operate">
         <a-button danger @click="onTest">test</a-button>
-        <a-button style="margin-left: 10px" @click="onSubmit">{{
-          id ? 'update' : 'save'
-        }}</a-button>
+        <a-button style="margin-left: 10px" @click="onSubmit"
+          >{{ id ? 'update' : 'save' }}
+        </a-button>
       </a-form-item>
     </a-form>
   </a-page-header>
@@ -141,6 +141,7 @@ import { fetchTokenList } from '@/api/token'
 import { getSchedule, postSchedule, putSchedule, sendMailBySchedule } from '@/api/schedule'
 import { useRoute, useRouter } from 'vue-router'
 import { message } from 'ant-design-vue'
+import { getApiUrl } from '@/util/request'
 
 const router = useRouter()
 const route = useRoute()
@@ -149,7 +150,7 @@ const id = ref(route.params.id)
 
 const labelCol = { span: 5 }
 const wrapperCol = { span: 13 }
-const formState = reactive<Schedule>({ headers: [] })
+const formState = reactive<Schedule>({ headers: [], url: getApiUrl('/scheduleTestApi') })
 const tokenLoading = ref<Boolean>(false)
 const tokenDataSource = ref<Array<Token>>([])
 const tokenPageState = reactive<PageState>({
@@ -199,7 +200,6 @@ const queryToken = (current: Number) => {
       tokenLoading.value = false
     })
 }
-
 
 const tokenShowSelect = () => {
   queryToken(tokenPageState!.current!)

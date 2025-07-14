@@ -14,19 +14,35 @@ export const getBaseUrl = () => {
   }
   return ''
 }
-service.interceptors.request.use(config => {
-  config.headers['Nonce'] = getLogin()
-  config.baseURL = getBaseUrl()
-  return config
-}, error => {
-  return Promise.reject(error)
-})
 
-service.interceptors.response.use((response) => {
-  return response
-}, (error) => {
-  message.error(error.response.data)
-  return Promise.reject(error)
-})
+export const getApiUrl = (url: string) => {
+  return getBaseUrl() + url
+}
+
+service.interceptors.request.use(
+  (config) => {
+    config.headers['Nonce'] = getLogin()
+    config.baseURL = getBaseUrl()
+    return config
+  },
+  (error) => {
+    return Promise.reject(error)
+  }
+)
+
+service.interceptors.response.use(
+  (response) => {
+    return response
+  },
+  (error) => {
+    if (error.response) {
+      message.error(error.response.data)
+    } else {
+      message.error(error.message)
+    }
+
+    return Promise.reject(error)
+  }
+)
 
 export default service

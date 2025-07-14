@@ -3,6 +3,7 @@ export interface System {
   hasLogin?: boolean
   isInit?: boolean
   port?: number
+  isDocker?: boolean
 }
 
 
@@ -15,6 +16,7 @@ export interface SetInfo {
   mysql?: Mysql
   manage?: Manage
   api?: Api
+  isDocker?: boolean
 }
 
 export interface Manage {

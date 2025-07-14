@@ -53,13 +53,13 @@ const items = reactive([
     title: 'Token',
     path: '/token'
   },
-  // {
-  //   key: '4',
-  //   icon: () => h(ScheduleOutlined),
-  //   label: 'Schedule',
-  //   title: 'Schedule',
-  //   path: '/schedule'
-  // },
+  {
+    key: '4',
+    icon: () => h(ScheduleOutlined),
+    label: 'Schedule',
+    title: 'Schedule',
+    path: '/schedule'
+  },
   {
     key: '5',
     icon: () => h(DesktopOutlined),

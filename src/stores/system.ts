@@ -7,6 +7,7 @@ export const useSystem = defineStore('useSystem', () => {
     hasInit: false,
     hasLogin: false,
     isInit: false,
+    isDocker: false,
     port: import.meta.env.VITE_BASE_PORT
   })
   return { system }
@@ -33,5 +34,5 @@ export const useViewConfig = defineStore('useViewConfig', () => {
     config.value.set(key, value)
     localStorage.setItem('_viewConfig_', JSON.stringify(Array.from(config.value)))
   }
-  return { config, getConfig,setConfig }
+  return { config, getConfig, setConfig }
 })
