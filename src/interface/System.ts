@@ -153,6 +153,7 @@ export interface Schedule {
   createTime?: Date
   updateTime?: Date
   token?: string
+  tokenId?:Number | string | string[] | Number[]
   tokenSelectedTags?: Array<Select>
   url?: string
   method?: string

@@ -133,11 +133,11 @@
   </a-page-header>
 </template>
 <script setup lang="ts">
-import { reactive, ref, watch } from 'vue'
-import type { Header, PageState, Schedule, Token } from '@/interface/System'
+import { onMounted, reactive, ref, watch } from 'vue'
+import type { Header, PageState, Schedule, Select, Token } from '@/interface/System'
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons-vue'
 import TagsSelectModal from '@/components/tags-select-modal.vue'
-import { fetchTokenList } from '@/api/token'
+import { fetchTokenList, getToken } from '@/api/token'
 import { getSchedule, postSchedule, putSchedule, sendMailBySchedule } from '@/api/schedule'
 import { useRoute, useRouter } from 'vue-router'
 import { message } from 'ant-design-vue'
@@ -153,6 +153,28 @@ const wrapperCol = { span: 13 }
 const formState = reactive<Schedule>({ headers: [], url: getApiUrl('/scheduleTestApi') })
 const tokenLoading = ref<Boolean>(false)
 const tokenDataSource = ref<Array<Token>>([])
+
+onMounted(() => {
+  if (route.params.id) {
+    const id: string = route.params.id as string
+    getSchedule(id).then((v) => {
+      formState.id = Number(id)
+      formState.name = v.name
+      formState.cron = v.cron
+      formState.url = v.url
+      formState.method = v.method
+      formState.body = v.body
+      formState.headers = v.headers
+      formState.useTemplate = v.useTemplate
+      formState.isUse = v.isUse
+      formState.isSendOnlyByError = v.isSendOnlyByError
+      formState.template = v.template
+      formState.token = v.token
+      formState.tokenSelectedTags = Array<Select>({ id:v.tokenId, name: v.token })
+    })
+  }
+})
+
 const tokenPageState = reactive<PageState>({
   total: 0,
   current: 1,
@@ -195,8 +217,7 @@ const queryToken = (current: Number) => {
       tokenPageState.total = <number>page.total
       tokenDataSource.value = page.list!
       tokenLoading.value = false
-    })
-    .catch(() => {
+    }).catch(() => {
       tokenLoading.value = false
     })
 }

@@ -57,11 +57,13 @@
 </template>
 <script setup lang="ts">
 import moment from 'moment/moment'
-import { onMounted, reactive } from 'vue'
-import type { Mail, Page, Schedule } from '@/interface/System'
+import { createVNode, onMounted, reactive } from 'vue'
+import type { Mail, Page, Pagination, Schedule } from '@/interface/System'
 import { useRouter } from 'vue-router'
 import { useViewConfig } from '@/stores/system'
 import { fetchScheduleList } from '@/api/schedule'
+import { Modal } from 'ant-design-vue'
+import { ExclamationCircleOutlined } from '@ant-design/icons-vue'
 
 const viewConfig = useViewConfig()
 const scheduled_alert_hide = viewConfig.getConfig('scheduled_alert_hide')
@@ -99,9 +101,9 @@ const columns = [
       return isUse.value ? 'yes' : 'no'
     }
   },  {
-    title: 'isOnlySendByError',
-    className: 'isOnlySendByError',
-    dataIndex: 'isOnlySendByError',
+    title: 'isSendOnlyByError',
+    className: 'isSendOnlyByError',
+    dataIndex: 'isSendOnlyByError',
     customRender: (isOnlySendByError: any) => {
       return isOnlySendByError.value ? 'yes' : 'no'
     }
@@ -134,8 +136,7 @@ const queryPage = () => {
       pageState.total = <number>page.total
       pageState.list = page.list
       pageState.loading = false
-    })
-    .catch(() => {
+    }).catch(() => {
       pageState.loading = false
     })
 }
@@ -146,10 +147,31 @@ onMounted(() => {
 const clickAdd = () => {
   router.push('/schedule/add')
 }
-const clickEdit = () => {}
+const clickEdit = () => {
+  if (pageState.selectedRowKeys!.length > 0) {
+    const id = pageState.selectedRowKeys![0]
+    router.push("/schedule/edit/" + id)
+  } else {
+    Modal.confirm({
+      title: 'edit',
+      icon: createVNode(ExclamationCircleOutlined),
+      content: 'please select one',
+      okText: 'ok',
+      cancelText: 'cancel',
+    });
+  }
+}
 const clickDelete = () => {}
-const onSelectChange = (selectedRowKeys: any) => {}
-const handleTableChange = (pagination: any) => {}
+const onSelectChange = (selectedRowKeys: any) => {
+  pageState.selectedRowKeys = selectedRowKeys
+}
+const handleTableChange = (pagination: Pagination) => {
+  pageState.total = pagination.total
+  pageState.current = pagination.current
+  pageState.pageSize = pagination.pageSize
+  queryPage()
+
+}
 </script>
 
 <style scoped>
