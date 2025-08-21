@@ -6,7 +6,6 @@ export interface System {
   isDocker?: boolean
 }
 
-
 export interface SetInfo {
   hasInit?: boolean
   dbType?: string
@@ -80,7 +79,7 @@ export interface Token {
   id?: Number | string | string[] | Number[]
   subject?: string
   token?: string
-  name?:string
+  name?: string
   receiveEmailIds?: any
   receiveEmails?: Array<Mail>
   SMTP?: Select
@@ -139,12 +138,15 @@ export interface SendMail {
   recipients?: string[]
   subject?: string
   content: string
+  token: string
   SMTP?: string
 }
-export interface Header{
+
+export interface Header {
   name?: string
   value?: string
 }
+
 export interface Schedule {
   id?: Number | string | string[] | Number[]
   name?: string
@@ -153,7 +155,7 @@ export interface Schedule {
   createTime?: Date
   updateTime?: Date
   token?: string
-  tokenId?:Number | string | string[] | Number[]
+  tokenId?: Number | string | string[] | Number[]
   tokenSelectedTags?: Array<Select>
   url?: string
   method?: string
