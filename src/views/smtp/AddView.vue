@@ -40,7 +40,7 @@ import {onMounted, reactive, ref} from "vue";
 import type {SMTP} from "@/interface/System";
 import {getSMTP, postSMTP, putSMTP, testSMTP} from "@/api/smtp";
 import {useRouter, useRoute} from "vue-router";
-import {message} from "ant-design-vue";
+import { Modal } from 'ant-design-vue'
 
 const router = useRouter()
 const route = useRoute()
@@ -83,7 +83,10 @@ const onSubmit = () => {
 const onTest = () => {
   formState.port = Number(formState.port)
   testSMTP(formState).then((v) => {
-    message.success(v);
+    Modal.success({
+      title: 'success',
+      content: v,
+    });
   })
 
 }

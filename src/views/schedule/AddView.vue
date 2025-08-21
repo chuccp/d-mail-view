@@ -140,7 +140,7 @@ import TagsSelectModal from '@/components/tags-select-modal.vue'
 import { fetchTokenList, getToken } from '@/api/token'
 import { getSchedule, postSchedule, putSchedule, sendMailBySchedule } from '@/api/schedule'
 import { useRoute, useRouter } from 'vue-router'
-import { message } from 'ant-design-vue'
+import { Modal } from 'ant-design-vue'
 import { getApiUrl } from '@/util/request'
 
 const router = useRouter()
@@ -150,7 +150,7 @@ const id = ref(route.params.id)
 
 const labelCol = { span: 5 }
 const wrapperCol = { span: 13 }
-const formState = reactive<Schedule>({ headers: [], url: getApiUrl('/scheduleTestApi') })
+const formState = reactive<Schedule>({ headers: [] })
 const tokenLoading = ref<Boolean>(false)
 const tokenDataSource = ref<Array<Token>>([])
 
@@ -170,7 +170,7 @@ onMounted(() => {
       formState.isSendOnlyByError = v.isSendOnlyByError
       formState.template = v.template
       formState.token = v.token
-      formState.tokenSelectedTags = Array<Select>({ id:v.tokenId, name: v.token })
+      formState.tokenSelectedTags = Array<Select>({ id: v.tokenId, name: v.token })
     })
   }
 })
@@ -217,7 +217,8 @@ const queryToken = (current: Number) => {
       tokenPageState.total = <number>page.total
       tokenDataSource.value = page.list!
       tokenLoading.value = false
-    }).catch(() => {
+    })
+    .catch(() => {
       tokenLoading.value = false
     })
 }
@@ -246,7 +247,10 @@ const onTest = () => {
     formState.token = formState!.tokenSelectedTags![0].name
   }
   sendMailBySchedule(formState).then((v) => {
-    message.success(v)
+    Modal.success({
+      title: 'success',
+      content: v
+    })
   })
 }
 </script>

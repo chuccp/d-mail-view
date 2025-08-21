@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { message } from 'ant-design-vue'
+import { Modal } from 'ant-design-vue'
 import { getLogin } from '@/util/localStore'
 import { useSystem } from '@/stores/system'
 
@@ -30,15 +30,26 @@ service.interceptors.request.use(
   }
 )
 
+const ModalError = (error: string) => {
+  Modal.error({
+    title: 'error',
+    content: error,
+    onOk() {
+      if (error.includes('timeout')) {
+        window.location.reload()
+      }
+    }
+  })
+}
 service.interceptors.response.use(
   (response) => {
     return response
   },
   (error) => {
     if (error.response) {
-      message.error(error.response.data)
+      ModalError(error.response.data)
     } else {
-      message.error(error.message)
+      ModalError(error.message)
     }
 
     return Promise.reject(error)

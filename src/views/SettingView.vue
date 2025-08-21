@@ -79,7 +79,7 @@ import type {SetInfo} from "@/interface/System";
 import {onMounted, reactive, ref} from "vue";
 import {useRouter} from "vue-router";
 import {useSystem} from "@/stores/system";
-import {message} from "ant-design-vue";
+import { Modal } from 'ant-design-vue'
 
 const router = useRouter()
 const {system} = useSystem();
@@ -104,7 +104,12 @@ const handleFinish = (values: SetInfo) => {
 
 const doTestConnection = () => {
   testConnection(formState).then((v) => {
-    message.success("success");
+
+    Modal.success({
+      title: 'success',
+      content: v,
+    });
+
   })
 }
 
