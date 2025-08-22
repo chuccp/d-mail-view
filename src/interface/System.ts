@@ -133,12 +133,18 @@ export interface Log {
   result: string
 }
 
+export interface File2 {
+  name?: string
+  data?: string | undefined | any
+}
+
 export interface SendMail {
   SMTPId: Number | string
   recipients?: string[]
+  files?: File2[]
   subject?: string
-  content: string
-  token: string
+  content?: string
+  token?: string
   SMTP?: string
 }
 
