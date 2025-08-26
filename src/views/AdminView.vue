@@ -1,5 +1,5 @@
 <template>
-  <a-layout id="components-layout-demo-custom-trigger" :style="{height: '100%'}">
+  <a-layout id="components-layout-demo-custom-trigger" >
     <a-layout-sider :trigger="null" collapsible>
       <nav-menu></nav-menu>
     </a-layout-sider>
@@ -56,7 +56,9 @@ const doLogout = () => {
 
 </script>
 <style>
-
+#components-layout-demo-custom-trigger{
+  min-height: 100%;
+}
 #components-layout-demo-custom-trigger .trigger {
   font-size: 18px;
   line-height: 64px;
