@@ -8,7 +8,7 @@ import {
   PieChartOutlined,
   DesktopOutlined,
   InboxOutlined,
-  ScheduleOutlined, MailOutlined, SettingOutlined
+  ScheduleOutlined, MailOutlined, SettingOutlined, HomeOutlined
 } from '@ant-design/icons-vue'
 import {reactive, h, onMounted} from "vue";
 import {useRoute, useRouter} from "vue-router";
@@ -36,7 +36,7 @@ onMounted(() => {
 const items = reactive([
   {
     key: '1',
-    icon: () => h(PieChartOutlined),
+    icon: () => h(HomeOutlined),
     label: 'Home',
     title: 'Home',
     path: '/'
