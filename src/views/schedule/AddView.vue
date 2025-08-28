@@ -95,9 +95,10 @@
       <a-form-item label="template" v-if="formState.useTemplate">
         <a-textarea
           v-model:value="formState.template"
-          placeholder="Enter the Template for the response"
+          placeholder="Enter the Template for the response，The response must be in JSON format"
           :rows="4"
         />
+        <a href="https://pkg.go.dev/text/template" target="_blank">How to use template?</a>
       </a-form-item>
 
       <a-form-item ref="isSendOnlyByError" label="Only Error Send Email" name="isSendOnlyByError">
