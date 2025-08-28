@@ -61,9 +61,10 @@ import { createVNode, onMounted, reactive } from 'vue'
 import type { Mail, Page, Pagination, Schedule } from '@/interface/System'
 import { useRouter } from 'vue-router'
 import { useViewConfig } from '@/stores/system'
-import { fetchScheduleList } from '@/api/schedule'
+import { fetchScheduleList,deleteSchedule } from '@/api/schedule'
 import { Modal } from 'ant-design-vue'
 import { ExclamationCircleOutlined } from '@ant-design/icons-vue'
+
 
 const viewConfig = useViewConfig()
 const scheduled_alert_hide = viewConfig.getConfig('scheduled_alert_hide')
@@ -161,7 +162,32 @@ const clickEdit = () => {
     });
   }
 }
-const clickDelete = () => {}
+const clickDelete = () => {
+  if (pageState.selectedRowKeys!.length > 0) {
+    const id = pageState.selectedRowKeys![0]
+
+    Modal.confirm({
+      title: 'delete',
+      icon: createVNode(ExclamationCircleOutlined),
+      content: 'delete?',
+      okText: 'ok',
+      cancelText: 'cancel',
+      onOk: () => {
+        deleteSchedule(Number(id)).then(() => {
+          queryPage()
+        })
+      }
+    });
+  } else {
+    Modal.confirm({
+      title: 'delete',
+      icon: createVNode(ExclamationCircleOutlined),
+      content: 'please select one',
+      okText: 'ok',
+      cancelText: 'cancel',
+    });
+  }
+}
 const onSelectChange = (selectedRowKeys: any) => {
   pageState.selectedRowKeys = selectedRowKeys
 }

@@ -24,7 +24,7 @@
       <a-form-item ref="cron" label="cron" name="cron">
         <a-input
           v-model:value="formState.cron"
-          placeholder="Enter the Schedule cron.precise to the second"
+          placeholder="Enter the Schedule cron.precise to the second.example (10  * * * * ?)"
         />
       </a-form-item>
 
