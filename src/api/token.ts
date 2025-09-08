@@ -2,25 +2,25 @@ import request from '@/util/request'
 import type { Page, SendMail, Token } from '@/interface/System'
 
 export async function fetchList(pageNo: Number, pageSize: Number) {
-
   const vv = await request({
-    url: '/token', params: {
+    url: '/token',
+    params: {
       pageNo: pageNo,
       pageSize: pageSize
     }
   })
-  return vv.data as (Page<Token>)
+  return vv.data as Page<Token>
 }
 
 export async function fetchTokenList(pageNo: Number, pageSize: Number) {
-
   const vv = await request({
-    url: '/token', params: {
+    url: '/token',
+    params: {
       pageNo: pageNo,
       pageSize: pageSize
     }
   })
-  return vv.data as (Page<Token>)
+  return vv.data as Page<Token>
 }
 
 export async function getToken(id: number | string | string[]) {
@@ -32,7 +32,8 @@ export async function getToken(id: number | string | string[]) {
 
 export async function deleteToken(id: number | string | string[]) {
   const vv = await request({
-    url: '/token/' + id, method: 'delete'
+    url: '/token/' + id,
+    method: 'delete'
   })
   return vv.data
 }
@@ -50,5 +51,9 @@ export async function putToken(token: Token) {
 export async function sendMailByToken(sendMail: SendMail) {
   const vv = await request({ url: '/sendMailByToken', method: 'post', data: sendMail })
   return vv.data
+}
 
+export async function sendMailByTokenForForm(formData: FormData) {
+  const vv = await request({ url: '/sendMailByToken', method: 'post', data: formData })
+  return vv.data
 }

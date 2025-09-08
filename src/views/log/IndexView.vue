@@ -21,6 +21,13 @@
       <div class="table-operations">
         <a-space>
           <a-button @click="clickView">view</a-button>
+          <a-input-search
+            v-model:value="searchKey"
+            placeholder="input search text"
+            enter-button="Search"
+            size="large"
+            @search="onSearch"
+          />
         </a-space>
       </div>
 
@@ -33,7 +40,7 @@
 
 import type { Log, Page, Pagination } from '@/interface/System'
 import moment from 'moment/moment'
-import { reactive, onMounted, createVNode } from 'vue'
+import { reactive, onMounted, createVNode, ref } from 'vue'
 import { fetchList } from '@/api/log'
 import { useRouter } from 'vue-router'
 import { Modal } from 'ant-design-vue'
@@ -44,6 +51,10 @@ const log_alert_hide = viewConfig.getConfig("log_alert_hide")
 
 const  onCloseAlert = () => {
   viewConfig.setConfig("log_alert_hide", true)
+}
+const searchKey = ref('')
+const onSearch = (value: string) => {
+  console.log(value)
 }
 
 const router = useRouter()

@@ -35,6 +35,14 @@
         </a-upload>
       </a-form-item>
 
+      <a-form-item ref="types" label="Types">
+        <a-switch
+          v-model:checked="checked"
+          @change="changeTypes"
+          checked-children="json"
+          un-checked-children="form"
+        />
+      </a-form-item>
       <a-form-item label="Operate">
         <a-button style="margin-left: 10px" @click="onSubmit">Send Mail</a-button>
       </a-form-item>
@@ -45,8 +53,9 @@
 <script setup lang="ts">
 import { onMounted, reactive, ref } from 'vue'
 import type { SendMail } from '@/interface/System'
-import { getToken, sendMailByToken } from '@/api/token'
+import { getToken, sendMailByToken, sendMailByTokenForForm } from '@/api/token'
 import { useRoute } from 'vue-router'
+import { UploadOutlined } from '@ant-design/icons-vue'
 import { Modal } from 'ant-design-vue'
 
 const formState = reactive<SendMail>({
@@ -62,6 +71,10 @@ const wrapperCol = { span: 13 }
 const options = Array()
 const route = useRoute()
 const fileList = ref([])
+
+const checked = ref(true)
+
+const changeTypes = (checked: boolean) => {}
 
 const handleChange = (info: any) => {
   fileList.value = info.fileList
@@ -81,19 +94,43 @@ const fileToBase64 = (file: any) => {
   })
 }
 
-const onSubmit =async () => {
-  for (const file of fileList.value) {
-    console.log(file)
-    const base64 =await fileToBase64(file['originFileObj']);
-    const name = file['name'];
-    formState.files?.push({
-      name: name,
-      data: base64
+const onSubmit = async () => {
+  if (checked.value) {
+    for (const file of fileList.value) {
+      const base64 = await fileToBase64(file['originFileObj'])
+      const name = file['name']
+      formState.files?.push({
+        name: name,
+        data: base64
+      })
+    }
+    sendMailByToken(formState).then((v) => {
+      Modal.info({ title: 'success', content: v })
+    })
+  } else {
+    // for (const file of fileList.value) {
+    //   formState.files?.push(file['originFileObj'])
+    // }
+    const formData = new FormData()
+    formData.append('token', formState.token!)
+    formData.append('SMTPId', formState.SMTPId?.toString())
+    formData.append('subject', formState.subject!)
+    formData.append('content', formState.content!)
+    const recipientsValue = formState.recipients?.join(',')?.toString()
+    formData.append('recipients', recipientsValue!)
+    for (const file of fileList.value) {
+      formData.append('files', file['originFileObj'])
+    }
+
+    // if (formState.files && formState.files.length > 0) {
+    //   for (const file of formState.files) {
+    //     formData.append('files', file.data)
+    //   }
+    // }
+    sendMailByTokenForForm(formData).then((v) => {
+      Modal.info({ title: 'success', content: v })
     })
   }
-  sendMailByToken(formState).then((v) => {
-    Modal.info({ title: 'success', content: v })
-  })
 }
 onMounted(() => {
   if (route.params.id) {
