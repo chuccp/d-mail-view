@@ -122,6 +122,9 @@ const columns = [
     title: 'subject',
     dataIndex: 'subject'
   }, {
+    title: 'content',
+    dataIndex: 'content'
+  }, {
     title: 'status',
     className: 'statusStr',
     dataIndex: 'statusStr'
