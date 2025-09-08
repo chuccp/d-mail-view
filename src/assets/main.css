@@ -18,7 +18,18 @@ a, .green {
   word-break: break-all; /* 任意位置换行 */
   /* 或使用 overflow-wrap: break-word; */
 }
-
+.log-content{
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3; /* 显示的最大行数 */
+  overflow: hidden;       /* 隐藏超出部分 */
+  width: 500px;           /* 指定容器宽度 */
+  line-height: 1.5;       /* 可选：设置行高控制整体高度 */
+  text-overflow: ellipsis; /* 超出部分显示省略号 */
+}
+.log-content-1{
+  width: 500px;
+}
 @media (hover: hover) {
   a:hover {
     background-color: hsla(160, 100%, 37%, 0.2);

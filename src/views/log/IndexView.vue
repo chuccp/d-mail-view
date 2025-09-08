@@ -14,6 +14,15 @@
            }"
            :data-source="pageState.list" bordered>
     <template #bodyCell="{ column, text }">
+
+      <template v-if="column.dataIndex === 'content'">
+        <div>
+          <div class="log-content">
+            {{text}}
+          </div>
+        </div>
+      </template>
+
     </template>
 
     <template #title>
@@ -123,7 +132,9 @@ const columns = [
     dataIndex: 'subject'
   }, {
     title: 'content',
-    dataIndex: 'content'
+    dataIndex: 'content',
+    // ellipsis: true,
+    className: 'log-content-1'
   }, {
     title: 'status',
     className: 'statusStr',
