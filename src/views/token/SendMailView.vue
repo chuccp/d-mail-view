@@ -53,7 +53,7 @@
 <script setup lang="ts">
 import { onMounted, reactive, ref } from 'vue'
 import type { SendMail } from '@/interface/System'
-import { getToken, sendMailByToken, sendMailByTokenForForm } from '@/api/token'
+import { getToken, sendMailByToken } from '@/api/token'
 import { useRoute } from 'vue-router'
 import { UploadOutlined } from '@ant-design/icons-vue'
 import { Modal } from 'ant-design-vue'
@@ -108,9 +108,6 @@ const onSubmit = async () => {
       Modal.info({ title: 'success', content: v })
     })
   } else {
-    // for (const file of fileList.value) {
-    //   formState.files?.push(file['originFileObj'])
-    // }
     const formData = new FormData()
     formData.append('token', formState.token!)
     formData.append('SMTPId', formState.SMTPId?.toString())
@@ -121,13 +118,7 @@ const onSubmit = async () => {
     for (const file of fileList.value) {
       formData.append('files', file['originFileObj'])
     }
-
-    // if (formState.files && formState.files.length > 0) {
-    //   for (const file of formState.files) {
-    //     formData.append('files', file.data)
-    //   }
-    // }
-    sendMailByTokenForForm(formData).then((v) => {
+    sendMailByToken(formData).then((v) => {
       Modal.info({ title: 'success', content: v })
     })
   }

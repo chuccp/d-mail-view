@@ -52,8 +52,3 @@ export async function sendMailByToken(sendMail: SendMail) {
   const vv = await request({ url: '/sendMailByToken', method: 'post', data: sendMail })
   return vv.data
 }
-
-export async function sendMailByTokenForForm(formData: FormData) {
-  const vv = await request({ url: '/sendMailByToken', method: 'post', data: formData })
-  return vv.data
-}
