@@ -1,52 +1,65 @@
 <template>
-  <a-space  direction="vertical" class="space-alert" v-if="!log_alert_hide"  >
-    <a-alert message="Here you can view the email sending logs, such as success or failure status." type="info" @close="onCloseAlert" closable  show-icon />
+  <a-space direction="vertical" class="space-alert" v-if="!log_alert_hide">
+    <a-alert
+      message="Here you can view the email sending logs, such as success or failure status."
+      type="info"
+      @close="onCloseAlert"
+      closable
+      show-icon
+    />
   </a-space>
-  <a-table size="middle" :scroll="{ x: 500 }"
-           :row-selection="{ type:'radio',selectedRowKeys: pageState.selectedRowKeys, onChange: onSelectChange }"
-           :columns="columns"
-           :pagination="pageState" @change="handleTableChange" :loading="pageState.loading"
-           :row-key="(record:any) => record.id"
-           :customRow="(record:any)=>{
-             return {onClick: () => {
-                    onSelectChange([record.id])
-             }}
-           }"
-           :data-source="pageState.list" bordered>
+  <a-table
+    size="middle"
+    :scroll="{ x: 500 }"
+    :row-selection="{
+      type: 'radio',
+      selectedRowKeys: pageState.selectedRowKeys,
+      onChange: onSelectChange
+    }"
+    :columns="columns"
+    :pagination="pageState"
+    @change="handleTableChange"
+    :loading="pageState.loading"
+    :row-key="(record: any) => record.id"
+    :customRow="
+      (record: any) => {
+        return {
+          onClick: () => {
+            onSelectChange([record.id])
+          }
+        }
+      }
+    "
+    :data-source="pageState.list"
+    bordered
+  >
     <template #bodyCell="{ column, text }">
-
       <template v-if="column.dataIndex === 'content'">
         <div>
           <div class="log-content">
-            {{text}}
+            {{ text }}
           </div>
         </div>
       </template>
-
     </template>
 
     <template #title>
-
       <div class="table-operations">
         <a-space>
           <a-button @click="clickView">view</a-button>
           <a-input-search
-            v-model:value="searchKey"
             placeholder="input search text"
             enter-button="Search"
-            size="large"
             @search="onSearch"
           />
         </a-space>
       </div>
-
     </template>
 
     <template #footer></template>
   </a-table>
 </template>
 <script setup lang="ts">
-
 import type { Log, Page, Pagination } from '@/interface/System'
 import moment from 'moment/moment'
 import { reactive, onMounted, createVNode, ref } from 'vue'
@@ -55,15 +68,17 @@ import { useRouter } from 'vue-router'
 import { Modal } from 'ant-design-vue'
 import { ExclamationCircleOutlined } from '@ant-design/icons-vue'
 import { useViewConfig } from '@/stores/system'
-const viewConfig =useViewConfig()
-const log_alert_hide = viewConfig.getConfig("log_alert_hide")
 
-const  onCloseAlert = () => {
-  viewConfig.setConfig("log_alert_hide", true)
+const viewConfig = useViewConfig()
+const log_alert_hide = viewConfig.getConfig('log_alert_hide')
+
+const onCloseAlert = () => {
+  viewConfig.setConfig('log_alert_hide', true)
 }
 const searchKey = ref('')
 const onSearch = (value: string) => {
-  console.log(value)
+  searchKey.value = value
+  queryPage()
 }
 
 const router = useRouter()
@@ -82,13 +97,15 @@ onMounted(() => {
 
 const queryPage = () => {
   pageState.loading = true
-  fetchList(pageState.current!, pageState.pageSize!).then((page: Page<Log>) => {
-    pageState.total = <number>page.total
-    pageState.list = page.list
-    pageState.loading = false
-  }).catch(() => {
-    pageState.loading = false
-  })
+  fetchList(pageState.current!, pageState.pageSize!, searchKey.value)
+    .then((page: Page<Log>) => {
+      pageState.total = <number>page.total
+      pageState.list = page.list
+      pageState.loading = false
+    })
+    .catch(() => {
+      pageState.loading = false
+    })
 }
 
 const handleTableChange = (data: Pagination) => {
@@ -103,8 +120,6 @@ const onSelectChange = (v: any) => {
   pageState.selectedRowKeys = v
 }
 
-
-
 const clickView = () => {
   const id = pageState.selectedRowKeys![0]
   if (id) {
@@ -118,7 +133,6 @@ const clickView = () => {
       cancelText: 'cancel'
     })
   }
-
 }
 
 const columns = [
@@ -130,19 +144,23 @@ const columns = [
   {
     title: 'subject',
     dataIndex: 'subject'
-  }, {
+  },
+  {
     title: 'content',
     dataIndex: 'content',
     // ellipsis: true,
     className: 'log-content-1'
-  }, {
+  },
+  {
     title: 'status',
     className: 'statusStr',
     dataIndex: 'statusStr'
-  }, {
+  },
+  {
     title: 'result',
     dataIndex: 'result'
-  }, {
+  },
+  {
     title: 'createTime',
     dataIndex: 'createTime',
     customRender: (text: any) => {
@@ -150,10 +168,9 @@ const columns = [
     }
   }
 ]
-
 </script>
 <style scoped>
-.space-alert{
+.space-alert {
   margin-bottom: 20px;
 }
 </style>
