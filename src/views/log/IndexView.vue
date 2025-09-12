@@ -37,7 +37,7 @@
       <template v-if="column.dataIndex === 'content'">
         <div>
           <div class="log-content">
-            {{ text }}
+            <focused-view  :text="text" :searchKey="searchKey"></focused-view>
           </div>
         </div>
       </template>
@@ -68,6 +68,7 @@ import { useRouter } from 'vue-router'
 import { Modal } from 'ant-design-vue'
 import { ExclamationCircleOutlined } from '@ant-design/icons-vue'
 import { useViewConfig } from '@/stores/system'
+import FocusedView from '@/components/focused-view.vue'
 
 const viewConfig = useViewConfig()
 const log_alert_hide = viewConfig.getConfig('log_alert_hide')
