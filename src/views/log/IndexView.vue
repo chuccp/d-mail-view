@@ -34,10 +34,14 @@
     bordered
   >
     <template #bodyCell="{ column, text }">
+
+      <template v-if="column.dataIndex === 'subject'">
+        <focused-view  :text="text" :searchKey="searchKey"></focused-view>
+      </template>
       <template v-if="column.dataIndex === 'content'">
         <div>
           <div class="log-content">
-            <focused-view  :text="text" :searchKey="searchKey"></focused-view>
+            <focused-view :isOffset="true" :text="text" :searchKey="searchKey"></focused-view>
           </div>
         </div>
       </template>

@@ -11,22 +11,26 @@
 <script setup lang="ts">
 const props = defineProps({
   text: String,
-  searchKey: String
+  searchKey: String,
+  isOffset: Boolean,
 })
 
 const splitByDelimiter = (str: string, delimiter?: string) => {
-  if (!str){
+  if (!str) {
     return []
   }
-  if (!delimiter){
+  if (!delimiter) {
     return [str]
   }
-
-  let index = str.indexOf(delimiter);
-  if(index>10){
-    index = index - 10;
+  if (props.isOffset && str.length > 30) {
+    let index = str.indexOf(delimiter)
+    if (index > 10) {
+      index = index - 10
+    } else {
+      index = 0
+    }
+    str = str.slice(index)
   }
-  str = str.slice(index);
   // 使用正则表达式创建动态分隔符，防止特殊字符问题
   const regex = new RegExp(delimiter.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g')
   // 切割字符串并保留分隔符
@@ -50,5 +54,3 @@ const splitByDelimiter = (str: string, delimiter?: string) => {
   return result
 }
 </script>
-
-
