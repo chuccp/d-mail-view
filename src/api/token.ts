@@ -48,7 +48,8 @@ export async function putToken(token: Token) {
   return vv.data
 }
 
-export async function sendMailByToken(sendMail: SendMail) {
+export async function sendMailByToken(sendMail: SendMail|FormData) {
   const vv = await request({ url: '/sendMailByToken', method: 'post', data: sendMail })
   return vv.data
 }
+
